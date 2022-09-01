@@ -1,4 +1,6 @@
-﻿<aside class="main-sidebar sidebar-dark-primary elevation-4">
+﻿@model System.Data.DataTable
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="@Url.Action("Index")" class="brand-link">
         <img src="/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
@@ -32,42 +34,24 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <li class="nav-item">
-                    <a href="#" class="nav-link  active">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>1st Year <i class="right fas fa-angle-left"></i></p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle text-danger nav-icon"></i>
-                                <p>
-                                    Semester
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle text-warning nav-icon"></i>
-                                        <p>
-                                            Subject
-                                            <i class="right fas fa-angle-left"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link">
-                                                <i class="far fa-circle text-info nav-icon"></i>
-                                                <p>Topic</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
+                @for (int i = 0; i < Model.Rows.Count; i++)
+                {
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>@Model.Rows[i][1].ToString()<i class="right fas fa-angle-left"></i></p>
+                        </a>
+
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-dailymotion"></i>
+                                    <p>  <i class="right fas fa-angle-left"></i> </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                }
                 <li class="nav-header">ACCOUNT</li>
                 <li class="nav-item">
                     <a onclick="logout()" class="nav-link lgbtn">
@@ -77,7 +61,5 @@
                 </li>
             </ul>
         </nav>
-        <!-- /.sidebar-menu -->
     </div>
-    <!-- /.sidebar -->
 </aside>

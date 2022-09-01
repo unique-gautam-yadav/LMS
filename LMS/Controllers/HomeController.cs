@@ -1,15 +1,4 @@
-﻿/*
-
-
-        **********************************************************************
-        **********************************************************************
-        **********************  GAUTAM YADAV TEST FILE  **********************
-        **********************************************************************
-        **********************************************************************
-
-         
-*/
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -27,6 +16,7 @@ namespace LMS.Controllers
         string connectionString = ConfigurationManager.ConnectionStrings["DataBase"].ConnectionString;
         public ActionResult Index()
         {
+            DataTable dataTable = new DataTable();
             Response.Cache.SetNoStore();
             if (Session["uname"] == null)
             {
@@ -34,7 +24,16 @@ namespace LMS.Controllers
             }
             else
             {
-                return View();
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string sql = "select * from SliderCont where ParentID = 0";
+                    using (SqlDataAdapter ad = new SqlDataAdapter(sql, conn))
+                    {
+                        ad.Fill(dataTable);
+                    }
+                }
+                return View(dataTable);
             }
         }
 
