@@ -34,11 +34,10 @@
         </div>
 
         <!-- Sidebar Menu -->
+
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                @for (int i = 0; i < dtbl.Rows.Count; i++)
-                {
-                    <li class="nav-item">
+                @for (int i = 0; i < dtbl.Rows.Count; i++) { <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>@dtbl.Rows[i][1].ToString()<i class="right fas fa-angle-left"></i></p>
@@ -47,9 +46,17 @@
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-dailymotion"></i>
-                                    <p>  <i class="right fas fa-angle-left"></i> </p>
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Semesters<i class="right fas fa-angle-left"></i> </p>
                                 </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            <i class="far fa-dot-circle nav-icon"></i>
+                                            <p>Subjects</p>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </li>

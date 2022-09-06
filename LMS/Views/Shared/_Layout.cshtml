@@ -6,23 +6,25 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
+    <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome Icons -->
-    <link href="~/plugins/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
-    <link href="~/dist/css/adminlte.min.css" rel="stylesheet" />
-    <link href="~/Content/fontawesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../dist/css/adminlte.min.css">
     <style>
-        .lgbtn{
+        .lgbtn {
             cursor: pointer;
         }
+
         * {
             user-select: none;
         }
-        
+
         .unn {
             cursor: default;
-            
             color: #c2c7d0;
             overflow: auto;
         }
@@ -52,31 +54,31 @@
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
-        @{
-            Html.RenderPartial("/Views/Shared/_NavBar.cshtml");
-        }
-        @{
-            Html.RenderPartial("/Views/Shared/_Slider.cshtml");
-        }
-        <div class="content-wrapper">
-            <div class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1 class="m-0">@ViewBag.Header</h1>
+            @{
+                Html.RenderPartial("/Views/Shared/_NavBar.cshtml");
+            }
+            @{
+                Html.RenderPartial("/Views/Shared/_Slider.cshtml");
+            }
+            <div class="content-wrapper">
+                <div class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1 class="m-0">@ViewBag.Header</h1>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="content">
-                <div class="container-fluid">
-                    @RenderBody()
+                <div class="content">
+                    <div class="container-fluid">
+                        @RenderBody()
+                    </div>
                 </div>
             </div>
-        </div>
-        @{
-            Html.RenderPartial("/Views/Shared/_Footer.cshtml");
-        }
+            @{
+                Html.RenderPartial("/Views/Shared/_Footer.cshtml");
+            }
 
     </div>
     <script src="../../plugins/jquery/jquery.min.js"></script>
