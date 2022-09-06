@@ -33,7 +33,8 @@ namespace LMS.Controllers
                         ad.Fill(dataTable);
                     }
                 }
-                return View(dataTable);
+                Session.Add("sliderItems", dataTable);
+                return View();
             }
         }
 
