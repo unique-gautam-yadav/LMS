@@ -155,5 +155,10 @@ namespace LMS.Controllers
                 return View();
             }
         }
+
+        [HttpGet]
+        public ActionResult Admin() => View();
+        
     }
+
 }
