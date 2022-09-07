@@ -42,48 +42,36 @@
                                 <div class="form-group">
                                     <button type="submit" class="form-control btn btn-primary submit px-3">Sign In</button>
                                 </div>
-                                <div class="row">
-                                    <div class="col-8">
-                                        <div class="icheck-primary">
-                                            @Html.CheckBox("remember", "remember")
-                                            <label for="remember">
-                                                Remember Me
-                                            </label>
-                                        </div>
+                                <div class="form-group d-md-flex">
+                                    <div class="w-50">
+                                        <label class="checkbox-wrap checkbox-primary">
+                                            Remember Me
+                                            <input type="checkbox" checked>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="w-50 text-md-right">
+                                        <a href="#" style="color: #fff">Forgot Password</a>
                                     </div>
                                 </div>
-                            </form>
-                            <form action="#" class="signin-form">
                                 <p class="w-100 text-center">&mdash; Or Sign In With &mdash;</p>
                                 <div class="social d-flex text-center">
-                                    <a href="/Home/Admin" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> Faculty Portal</a>
+                                    <a href="~/Home/Admin" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> Student Portal</a>
                                 </div>
-                                <!-- /.col -->
                             </form>
                         </div>
-                            <!--<p class="mb-0">
-                        <a href="#" class="text-center">Register a new membership</a>
-                    </p> -->
-                     </div>
-                        <!-- /.card-body -->
+                    </div>
                 </div>
-                    <!-- /.card -->
             </div>
-        </div>
     </section>
-                <!-- /.login-box -->
-                <!-- jQuery -->
-                <script src="../../plugins/jquery/jquery.min.js"></script>
-                <!-- Bootstrap 4 -->
-                <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-                <!-- SweetAlert2 -->
-                <script src="../../plugins/sweetalert2/sweetalert2.min.js"></script>
-                <!-- Toastr -->
-                <script src="../../plugins/toastr/toastr.min.js"></script>
-                <!-- AdminLTE App -->
-                <script src="../../dist/js/adminlte.min.js"></script>
 
-                <script >
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/popper.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="../../plugins/toastr/toastr.min.js"></script>
+
+    <script>
         if (window.localStorage["PrevUsr"] == 'null' || window.localStorage["PrevUsr"] == undefined) {
              if ("@Model" == "False") {
                 $(function () {
@@ -107,7 +95,7 @@
             window.location.href = "/Home/LockScreen"
         }
 
-                </script>
+    </script>
 </body>
 
 </html>
