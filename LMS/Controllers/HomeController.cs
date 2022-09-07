@@ -101,11 +101,12 @@ namespace LMS.Controllers
                          SqlDataReader rd = cmd.ExecuteReader();
                          while (rd.Read())
                          {
-                             if (rd.GetString(1) == log.uname && rd.GetString(3) == log.password)
+                             if (rd.GetString(2) == log.uname && rd.GetString(4) == log.password)
                              {
-                                 Session["uname"] = rd.GetString(1);
-                                 Session["Name"] = rd.GetString(2);
+                                 Session["uname"] = rd.GetString(2);
+                                 Session["Name"] = rd.GetString(3);
                                  Session["ID"] = rd.GetInt32(0);
+                                Session["Roll"] = rd.GetInt32(1);
                                  n++;
                              }
                          }
