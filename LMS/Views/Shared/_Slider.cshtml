@@ -50,7 +50,7 @@
                         </a>
                         @for (int j = 0; j < dtbl1.Rows.Count; j++)
                         {
-                            if (Convert.ToInt32(dtbl1.Rows[j][3].ToString()) == Convert.ToInt32(dtbl.Rows[i][0].ToString()))
+                            if (dtbl1.Rows[j][3].ToString() == dtbl.Rows[i][0].ToString())
                             {
 
                                 <ul class="nav nav-treeview">
@@ -62,12 +62,12 @@
                                         </a>
                                         @for (int k = 0; k < dtbl1.Rows.Count; k++)
                                         {
-                                            if (Convert.ToInt32(dtbl1.Rows[k][3].ToString()) == Convert.ToInt32(dtbl.Rows[j][0].ToString()))
+                                            if (dtbl1.Rows[k][3].ToString() == dtbl1.Rows[j][0].ToString())
                                             {
                                                 <ul class="nav nav-treeview">
                                                     <li class="nav-item">
                                                         <a href="#" class="nav-link">
-                                                            <i class="far fa-dot-circle nav-icon"></i>
+                                                            <i class="nav-icon far fa-circle text-info"></i>
                                                             <p>@dtbl1.Rows[k][1]</p>
                                                         </a>
                                                     </li>
