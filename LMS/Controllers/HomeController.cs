@@ -33,7 +33,7 @@ namespace LMS.Controllers
                     {
                         ad.Fill(dataTable);
                     }
-                    string sql1 = "select * from SliderCont where ParentID = 1";
+                    string sql1 = "select * from SliderCont";
                     using (SqlDataAdapter ad = new SqlDataAdapter(sql1, conn))
                     {
                         ad.Fill(dataTable1);
