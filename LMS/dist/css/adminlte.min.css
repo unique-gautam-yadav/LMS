@@ -12091,7 +12091,7 @@ body:not(.layout-fixed) .main-sidebar {
     }
 
 .content-header {
-    padding: 5px .5rem
+    padding: 1px
 }
 
 .text-sm .content-header {

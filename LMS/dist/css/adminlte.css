@@ -11863,7 +11863,7 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 }
 
 .content-header {
-  padding: 5px 0.5rem;
+  padding: 1px;
 }
 
 .text-sm .content-header {
