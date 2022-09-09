@@ -164,6 +164,7 @@
     <Content Include="dist\img\boxed-bg.jpg" />
     <Content Include="dist\img\boxed-bg.png" />
     <Content Include="dist\img\GLA.jpg" />
+    <Content Include="dist\img\GLA.mp4" />
     <Content Include="dist\img\icons.png" />
     <Content Include="dist\img\Logo.png" />
     <Content Include="dist\js\adminlte.js" />
