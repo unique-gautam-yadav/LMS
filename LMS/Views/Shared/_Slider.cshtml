@@ -60,14 +60,21 @@
                                             <p>@dtbl1.Rows[j][1]<i class="right fas fa-angle-left"></i> </p>
 
                                         </a>
-                                        <ul class="nav nav-treeview">
-                                            <li class="nav-item">
-                                                <a href="#" class="nav-link">
-                                                    <i class="far fa-dot-circle nav-icon"></i>
-                                                    <p>Subjects</p>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        @for (int k = 0; k < dtbl1.Rows.Count; k++)
+                                        {
+                                            if (Convert.ToInt32(dtbl1.Rows[k][3].ToString()) == Convert.ToInt32(dtbl.Rows[j][0].ToString()))
+                                            {
+                                                <ul class="nav nav-treeview">
+                                                    <li class="nav-item">
+                                                        <a href="#" class="nav-link">
+                                                            <i class="far fa-dot-circle nav-icon"></i>
+                                                            <p>@dtbl1.Rows[k][1]</p>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            }
+                                        }
+
                                     </li>
                                 </ul>
                             }
