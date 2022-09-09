@@ -95,6 +95,7 @@
             var ch = confirm("Do you want to save account.")
             if (ch == true) {
                 localStorage["PrevUsr"] = "@Session["uname"]";
+                localStorage["PrevRoll"] = "@Session["Roll"]";
             }
             else {
                 localStorage["PrevUsr"] = null;
