@@ -2053,8 +2053,6 @@
     <Content Include="plugins\uplot\uPlot.min.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="dist\css\adminlte.css.map" />
-    <Content Include="dist\css\adminlte.min.css.map" />
     <Content Include="dist\css\alt\adminlte.components.css.map" />
     <Content Include="dist\css\alt\adminlte.components.min.css.map" />
     <Content Include="dist\css\alt\adminlte.core.css.map" />
