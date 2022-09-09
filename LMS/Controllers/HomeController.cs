@@ -17,6 +17,7 @@ namespace LMS.Controllers
         public ActionResult Index()
         {
             DataTable dataTable = new DataTable();
+            DataTable dataTable1 = new DataTable();
             Response.Cache.SetNoStore();
             if (Session["uname"] == null)
             {
@@ -32,8 +33,14 @@ namespace LMS.Controllers
                     {
                         ad.Fill(dataTable);
                     }
+                    string sql1 = "select * from SliderCont where ParentID = 1";
+                    using (SqlDataAdapter ad = new SqlDataAdapter(sql1, conn))
+                    {
+                        ad.Fill(dataTable1);
+                    }
                 }
                 Session.Add("sliderItems", dataTable);
+                Session.Add("sliderItems1", dataTable1);
                 return View();
             }
         }

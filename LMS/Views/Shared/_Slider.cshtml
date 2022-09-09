@@ -1,5 +1,6 @@
 ﻿@{
     System.Data.DataTable dtbl = Session["sliderItems"] as System.Data.DataTable;
+    System.Data.DataTable dtbl1 = Session["sliderItems1"] as System.Data.DataTable;
 }
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -14,7 +15,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                @{ 
+                @{
                     string imgurl = "https://glauniversity.in:8103/" + Session["Roll"] + ".jpg";
                 }
                 <img src="@imgurl" class="img-circle elevation-2" alt="Profile">
@@ -40,28 +41,37 @@
 
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                @for (int i = 0; i < dtbl.Rows.Count; i++) { <li class="nav-item">
+                @for (int i = 0; i < dtbl.Rows.Count; i++)
+                {
+                    <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>@dtbl.Rows[i][1].ToString()<i class="right fas fa-angle-left"></i></p>
                         </a>
+                        @for (int j = 0; j < dtbl1.Rows.Count; j++)
+                        {
 
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Semesters<i class="right fas fa-angle-left"></i> </p>
-                                </a>
+                            {
+
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
                                         <a href="#" class="nav-link">
-                                            <i class="far fa-dot-circle nav-icon"></i>
-                                            <p>Subjects</p>
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>@dtbl1.Rows[j][1]<i class="right fas fa-angle-left"></i> </p>
+
                                         </a>
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link">
+                                                    <i class="far fa-dot-circle nav-icon"></i>
+                                                    <p>Subjects</p>
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </li>
                                 </ul>
-                            </li>
-                        </ul>
+                            }
+                        }
                     </li>
                 }
                 <li class="nav-header">ACCOUNT</li>
