@@ -28,12 +28,12 @@ namespace LMS.Controllers
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    string sql = "select * from DCS where ParentID = 0";
+                    string sql = "select * from Diploma_CS where ParentID = 0";
                     using (SqlDataAdapter ad = new SqlDataAdapter(sql, conn))
                     {
                         ad.Fill(dataTable);
                     }
-                    string sql1 = "select * from DCS";
+                    string sql1 = "select * from Diploma_CS";
                     using (SqlDataAdapter ad = new SqlDataAdapter(sql1, conn))
                     {
                         ad.Fill(dataTable1);
@@ -90,57 +90,57 @@ namespace LMS.Controllers
         public ActionResult Login(FormCollection collection, Models.Login log)
         {
             if (Session["uname"] != null)
-             {
-                 return RedirectToAction("Index");
-             }
-             else
-             {
-                 using (SqlConnection conn = new SqlConnection(connectionString))
-                 {
-                     conn.Open();
-                     string sql1 = "SELECT * FROM Students WHERE uname = @uname and password = @password";
-                     string sql2 = "UPDATE Students SET lastlogin = CURRENT_TIMESTAMP WHERE ID = @ID";
-                     int n = 0;
-                     using (SqlCommand cmd = new SqlCommand(sql1, conn))
-                     {
-                         cmd.Parameters.AddWithValue("@uname", log.uname);
-                         cmd.Parameters.AddWithValue("@password", log.password);
-                         SqlDataReader rd = cmd.ExecuteReader();
-                         while (rd.Read())
-                         {
-                             if (rd.GetString(2) == log.uname && rd.GetString(4) == log.password)
-                             {
-                                 Session["uname"] = rd.GetString(2);
-                                 Session["Name"] = rd.GetString(3);
-                                 Session["ID"] = rd.GetInt32(0);
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string sql1 = "SELECT * FROM Students WHERE uname = @uname and password = @password";
+                    string sql2 = "UPDATE Students SET lastlogin = CURRENT_TIMESTAMP WHERE ID = @ID";
+                    int n = 0;
+                    using (SqlCommand cmd = new SqlCommand(sql1, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@uname", log.uname);
+                        cmd.Parameters.AddWithValue("@password", log.password);
+                        SqlDataReader rd = cmd.ExecuteReader();
+                        while (rd.Read())
+                        {
+                            if (rd.GetString(2) == log.uname && rd.GetString(4) == log.password)
+                            {
+                                Session["uname"] = rd.GetString(2);
+                                Session["Name"] = rd.GetString(3);
+                                Session["ID"] = rd.GetInt32(0);
                                 Session["Roll"] = rd.GetInt32(1);
-                                 n++;
-                             }
-                         }
-                         rd.Close();
+                                n++;
+                            }
+                        }
+                        rd.Close();
 
-                     }
-                     if (n != 0)
-                     {
-                         using(SqlCommand cmd = new SqlCommand(sql2, conn))
-                         {
-                             cmd.Parameters.AddWithValue("@ID", Session["ID"]);
-                             cmd.ExecuteNonQuery();
-                         }
-                         Response.Write(log.remember);
-                         return RedirectToAction("Index");
+                    }
+                    if (n != 0)
+                    {
+                        using (SqlCommand cmd = new SqlCommand(sql2, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@ID", Session["ID"]);
+                            cmd.ExecuteNonQuery();
+                        }
+                        Response.Write(log.remember);
+                        return RedirectToAction("Index");
 
-                     }
-                     else
-                     {
-                         Session["uname"] = null;
-                         Session["uid"] = null;
-                         Session["Name"] = null;
-                         return RedirectToAction("Login", new {@loginstatus = false});
-                     }
-                 }
-               
-        }
+                    }
+                    else
+                    {
+                        Session["uname"] = null;
+                        Session["uid"] = null;
+                        Session["Name"] = null;
+                        return RedirectToAction("Login", new { @loginstatus = false });
+                    }
+                }
+
+            }
         }
 
         public ActionResult Logout()
@@ -164,10 +164,6 @@ namespace LMS.Controllers
                 return View();
             }
         }
-
-        [HttpGet]
-        public ActionResult Admin() => View();
-        
     }
 
 }

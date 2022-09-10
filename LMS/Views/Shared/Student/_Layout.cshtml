@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GLA University</title>
+    <title>@ViewBag.Title GLA University</title>
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
@@ -15,6 +15,10 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="../dist/css/adminlte.min.css">
     <style>
+        .profile_img{
+            height: 2.5rem;
+            width : 2.5rem;
+        }
         .lgbtn {
             cursor: pointer;
         }
@@ -55,10 +59,10 @@
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
             @{
-                Html.RenderPartial("/Views/Shared/_NavBar.cshtml");
+                Html.RenderPartial("/Views/Shared/Student/_NavBar.cshtml");
             }
             @{
-                Html.RenderPartial("/Views/Shared/_Slider.cshtml");
+                Html.RenderPartial("/Views/Shared/Student/_Slider.cshtml");
             }
             <div class="content-wrapper">
                 <div class="content-header">
@@ -77,7 +81,7 @@
                 </div>
             </div>
             @{
-                Html.RenderPartial("/Views/Shared/_Footer.cshtml");
+                Html.RenderPartial("/Views/Shared/Student/_Footer.cshtml");
             }
 
     </div>
