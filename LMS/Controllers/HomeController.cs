@@ -28,12 +28,12 @@ namespace LMS.Controllers
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    string sql = "select * from SliderCont where ParentID = 0";
+                    string sql = "select * from DCS where ParentID = 0";
                     using (SqlDataAdapter ad = new SqlDataAdapter(sql, conn))
                     {
                         ad.Fill(dataTable);
                     }
-                    string sql1 = "select * from SliderCont";
+                    string sql1 = "select * from DCS";
                     using (SqlDataAdapter ad = new SqlDataAdapter(sql1, conn))
                     {
                         ad.Fill(dataTable1);
@@ -98,8 +98,8 @@ namespace LMS.Controllers
                  using (SqlConnection conn = new SqlConnection(connectionString))
                  {
                      conn.Open();
-                     string sql1 = "SELECT * FROM users WHERE uname = @uname and password = @password";
-                     string sql2 = "UPDATE users SET lastlogin = CURRENT_TIMESTAMP WHERE ID = @ID";
+                     string sql1 = "SELECT * FROM Students WHERE uname = @uname and password = @password";
+                     string sql2 = "UPDATE Students SET lastlogin = CURRENT_TIMESTAMP WHERE ID = @ID";
                      int n = 0;
                      using (SqlCommand cmd = new SqlCommand(sql1, conn))
                      {
