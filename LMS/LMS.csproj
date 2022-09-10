@@ -2391,6 +2391,7 @@
     <Content Include="Views\Shared\Admin\_Footer.cshtml" />
     <Content Include="Views\Shared\Admin\_Offset.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Shared\Admin\_PageTitle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

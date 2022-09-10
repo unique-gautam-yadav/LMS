@@ -15,7 +15,19 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="/css/Admin/style.css">
+    <style>
+        .login 
 
+        {
+            background-color: rgba(47, 79,79, 0.4);
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            border-radius: 0.25rem;
+            padding: 20px;
+            border-radius: 30px;
+            backdrop-filter: blur(6px)
+        }
+
+    </style>
 </head>
 <body class="img js-fullheight" style="background-image: url(/dist/img/GLA.jpg);">
     <section class="ftco-section">
@@ -28,7 +40,7 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-6 col-lg-4">
-                    <div class="login-wrap p-0">
+                    <div class="login-wrap login">
                         <h3 class="mb-4 text-center">Faculty Portal</h3>
                         <form action="#" class="signin-form">
                             <div class="form-group">
@@ -41,15 +53,15 @@
                             <div class="form-group">
                                 <button type="submit" class="form-control btn btn-primary submit px-3">Sign In</button>
                             </div>
-                            <div class="form-group d-md-flex">
-                                <div class="w-50">
+                            <div class="form-group d-md-flex justify-content-between">
+                                <div>
                                     <label class="checkbox-wrap checkbox-primary">
                                         Remember Me
                                         <input type="checkbox" checked>
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
-                                <div class="w-50 text-md-right">
+                                <div class="text-md-right">
                                     <a href="#" style="color: #fff">Forgot Password</a>
                                 </div>
                             </div>

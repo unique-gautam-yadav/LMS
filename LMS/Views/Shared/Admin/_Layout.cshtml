@@ -37,6 +37,9 @@
             @{
                 Html.RenderPartial("/Views/Shared/Admin/_NavBar.cshtml");
             }
+            @{ 
+                Html.RenderPartial("/Views/Shared/Admin/_PageTitle.cshtml");
+            }
 
             <div class="main-content-inner">
                 @RenderBody()
