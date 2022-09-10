@@ -22,6 +22,48 @@
     <link rel="stylesheet" href="/assets/css/responsive.css">
     <!-- modernizr css -->
     <script src="/assets/js/vendor/modernizr-2.8.3.min.js"></script>
+    <style>
+        .profile_img {
+            height: 2.5rem;
+            width: 2.5rem;
+        }
+
+        .lgbtn {
+            cursor: pointer;
+        }
+
+        * {
+            user-select: none;
+        }
+
+        .unn {
+            cursor: default;
+            color: #c2c7d0;
+            overflow: auto;
+        }
+        /* width */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            border-radius: 50px;
+            /*background: #f1f1f1;*/
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 50px;
+        }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
+    </style>
 </head>
 <body>
     <div id="preloader">
@@ -37,7 +79,7 @@
             @{
                 Html.RenderPartial("/Views/Shared/Admin/_NavBar.cshtml");
             }
-            @{ 
+            @{
                 Html.RenderPartial("/Views/Shared/Admin/_PageTitle.cshtml");
             }
 
@@ -80,6 +122,21 @@
     <!-- others plugins -->
     <script src="/assets/js/plugins.js"></script>
     <script src="/assets/js/scripts.js"></script>
+    <script>
+        localStorage["PrevF"] = null
+    function logout() {
+        var ch = confirm("Do you want to save account.")
+        if (ch == true) {
+            localStorage["PrevF"] = "@Session["FName"]";
+            //localStorage["PrevI"] = "@Session["Roll"]";
+        }
+        else {
+            //localStorage["PrevUsr"] = null;
+            //localStorage["PrevRoll"] = null;
+        }
+        window.location.href = "/Admin/Logout"
+    }
+    </script>
 </body>
 
 </html>

@@ -42,12 +42,12 @@
                 <div class="col-md-6 col-lg-4">
                     <div class="login-wrap login">
                         <h3 class="mb-4 text-center">Faculty Portal</h3>
-                        <form action="#" class="signin-form">
+                        <form action="Login" class="signin-form" method="post">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Username" required>
+                                <input name="uname" type="text" class="form-control" placeholder="Username" required>
                             </div>
                             <div class="form-group">
-                                <input id="password-field" type="password" class="form-control" placeholder="Password" required>
+                                <input name="password" id="password-field" type="password" class="form-control" placeholder="Password" required>
                                 <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                             </div>
                             <div class="form-group">
@@ -57,7 +57,7 @@
                                 <div>
                                     <label class="checkbox-wrap checkbox-primary">
                                         Remember Me
-                                        <input type="checkbox" checked>
+                                        <input name="remember" type="checkbox" checked>
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
@@ -79,6 +79,9 @@
     <script src="/js/popper.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/main.js"></script>
+    <script>
+        localStorage["PrevF"] = null;
+    </script>
 
 </body>
 </html>

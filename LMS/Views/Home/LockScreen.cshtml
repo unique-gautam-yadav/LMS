@@ -35,11 +35,8 @@
             <!-- START LOCK SCREEN ITEM -->
             <div class="lockscreen-item">
                 <!-- lockscreen image -->
-                    @{
-                        string imgurl = "https://glauniversity.in:8103/" + Session["Roll"] + ".jpg";
-                    }
                 <div class="lockscreen-image">
-                    <img src="@imgurl" alt="">
+                    <img id="profile_img" src="" alt="">
                 </div>
                     <!-- /.lockscreen-image -->
                     <!-- lockscreen credentials (contains the form) -->
@@ -72,15 +69,17 @@
         <!-- Bootstrap 4 -->
         <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script>
-
-            if (localStorage["PrevUsr"] == 'null' || localStorage["PrevUsr"] == undefined) {
+            if (localStorage["PrevUsr"] == 'null' && localStorage["PrevRoll"] == 'null' ||
+                localStorage["PrevUsr"] == undefined && localStorage["PrevRoll"] == undefined) {
                 window.location.href = "/Home/Login"
             } else {
                 document.getElementById("PrevUsr").innerHTML = localStorage["PrevUsr"]
                 document.getElementById("uname").value = localStorage["PrevUsr"]
+                document.getElementById("profile_img").src = imgurl = "https://glauniversity.in:8103/" + localStorage["PrevRoll"] + ".jpg"
                 document.getElementById("uname").style = "display : none;"
                 function redirectToLogin() {
                     localStorage["PrevUsr"] = null;
+                    localStorage["PrevRoll"] = null;
                     window.location.href = "/Home/Login"
                 }
             }

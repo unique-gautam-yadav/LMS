@@ -13,7 +13,7 @@ namespace LMS.Controllers
 {
     public class HomeController : Controller
     {
-        string connectionString = ConfigurationManager.ConnectionStrings["DataBase"].ConnectionString;
+        string DataBase = ConfigurationManager.ConnectionStrings["DataBase"].ConnectionString;
         public ActionResult Index()
         {
             DataTable dataTable = new DataTable();
@@ -25,7 +25,7 @@ namespace LMS.Controllers
             }
             else
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlConnection conn = new SqlConnection(DataBase))
                 {
                     conn.Open();
                     string sql = "select * from Diploma_CS where ParentID = 0";
@@ -95,7 +95,7 @@ namespace LMS.Controllers
             }
             else
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlConnection conn = new SqlConnection(DataBase))
                 {
                     conn.Open();
                     string sql1 = "SELECT * FROM Students WHERE uname = @uname and password = @password";
@@ -147,7 +147,8 @@ namespace LMS.Controllers
         {
             Session["uname"] = null;
             Session["uid"] = null;
-            Session["Full Name"] = null;
+            Session["Name"] = null;
+            Session["Roll"] = null;
             return RedirectToAction("Login");
 
         }
