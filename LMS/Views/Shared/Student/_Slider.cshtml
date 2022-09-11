@@ -14,18 +14,20 @@
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
+            <div class="image mt-2">
                 @{
                     string imgurl = "https://glauniversity.in:8103/" + Session["Roll"] + ".jpg";
                 }
-                <img src="@imgurl" class="profile_img img-circle elevation-2 " alt="Profile">
+                <img src="@imgurl" class="mt-1 img-circle elevation-2 " alt="Profile">
             </div>
             <div class="info">
                 <div class="d-block unn">@Session["Name"]</div>
+                <div class="d-block unn small">@Session["Course"] (@Session["Branch"])</div>
             </div>
         </div>
+        <div class="info">
+        </div>
 
-        <!-- SidebarSearch Form -->
         <div class="form-inline">
             <div class="input-group" data-widget="sidebar-search">
                 <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">

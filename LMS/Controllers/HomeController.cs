@@ -28,12 +28,12 @@ namespace LMS.Controllers
                 using (SqlConnection conn = new SqlConnection(DataBase))
                 {
                     conn.Open();
-                    string sql = "select * from Diploma_CS where ParentID = 0";
+                    string sql = "select * from " + Session["Course"] + "_" + Session["Branch"] + " where ParentID = 0";
                     using (SqlDataAdapter ad = new SqlDataAdapter(sql, conn))
                     {
                         ad.Fill(dataTable);
                     }
-                    string sql1 = "select * from Diploma_CS";
+                    string sql1 = "select * from " + Session["Course"] + "_" + Session["Branch"];
                     using (SqlDataAdapter ad = new SqlDataAdapter(sql1, conn))
                     {
                         ad.Fill(dataTable1);
@@ -114,6 +114,8 @@ namespace LMS.Controllers
                                 Session["Name"] = rd.GetString(3);
                                 Session["ID"] = rd.GetInt32(0);
                                 Session["Roll"] = rd.GetInt32(1);
+                                Session["Course"] = rd.GetString(6);
+                                Session["Branch"] = rd.GetString(7);
                                 n++;
                             }
                         }
@@ -149,6 +151,8 @@ namespace LMS.Controllers
             Session["uid"] = null;
             Session["Name"] = null;
             Session["Roll"] = null;
+            Session["Course"] = null;
+            Session["Branch"] = null;
             return RedirectToAction("Login");
 
         }
