@@ -15,10 +15,20 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css" />
     <link rel="stylesheet" href="/css/Admin/style.css">
+    <style>
+        .login {
+            background-color: rgba(47, 79,79, 0.4);
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            border-radius: 0.25rem;
+            padding: 20px;
+            border-radius: 30px;
+            backdrop-filter: blur(6px)
+        }
+    </style>
 
 </head>
 
-<body class="img js-fullheight" style="background-image: url(/dist/img/GLA.jpg);">
+<body class="img js-fullheight" style="background-image: url(/dist/img/about-us.jpg);">
     <section class="ftco-section">
         <div class="container">
             <div class="row justify-content-center">
@@ -29,7 +39,7 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-6 col-lg-4">
-                    <div class="login-wrap p-0">
+                    <div class="login-wrap login">
                         <h3 class="mb-4 text-center">Student Portal</h3>
                         <div class="card-body">
                             <form action="Login" method="post">
@@ -47,7 +57,7 @@
                                     <div class="w-50">
                                         <label class="checkbox-wrap checkbox-primary">
                                             Remember Me
-                                            <input type="checkbox" checked>
+                                            <input type="checkbox">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>

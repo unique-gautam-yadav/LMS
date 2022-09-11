@@ -210,6 +210,7 @@
     <Content Include="css\bootstrap\utilities\_stretched-link.css" />
     <Content Include="css\bootstrap\_media.css" />
     <Content Include="css\style.css" />
+    <Content Include="dist\img\about-us.jpg" />
     <Content Include="dist\css\adminlte.css" />
     <Content Include="dist\css\adminlte.min.css" />
     <Content Include="dist\css\alt\adminlte.components.css" />
