@@ -11,7 +11,7 @@ using System.Configuration;
 
 namespace LMS.Controllers
 {
-    public class HomeController : Controller
+    public class StudentController : Controller
     {
         string DataBase = ConfigurationManager.ConnectionStrings["DataBase"].ConnectionString;
         public ActionResult Index()

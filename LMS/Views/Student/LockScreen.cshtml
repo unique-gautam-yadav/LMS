@@ -71,7 +71,7 @@
         <script>
             if (localStorage["PrevUsr"] == 'null' && localStorage["PrevRoll"] == 'null' ||
                 localStorage["PrevUsr"] == undefined && localStorage["PrevRoll"] == undefined) {
-                window.location.href = "/Home/Login"
+                window.location.href = "/Student/Login"
             } else {
                 document.getElementById("PrevUsr").innerHTML = localStorage["PrevUsr"]
                 document.getElementById("uname").value = localStorage["PrevUsr"]
@@ -80,7 +80,7 @@
                 function redirectToLogin() {
                     localStorage["PrevUsr"] = null;
                     localStorage["PrevRoll"] = null;
-                    window.location.href = "/Home/Login"
+                    window.location.href = "/Student/Login"
                 }
             }
         </script>
