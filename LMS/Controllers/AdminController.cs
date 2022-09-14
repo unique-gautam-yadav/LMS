@@ -13,7 +13,7 @@ namespace LMS.Controllers
         string DataBase = ConfigurationManager.ConnectionStrings["DataBase"].ConnectionString.ToString();
         // GET: Admin
         [HttpGet]
-        public ActionResult Login()
+        public ActionResult Login(bool loginstatus = true)
         {
             if (Session["uid"] != null && Session["FName"] != null)
             {
@@ -22,7 +22,7 @@ namespace LMS.Controllers
             else
             {
             Response.Cache.SetNoStore();
-            return View();
+            return View(loginstatus);
             }
         }
         [HttpPost]
@@ -104,6 +104,11 @@ namespace LMS.Controllers
             Session["FName"] = null;
             Session["EID"] = null;
             return RedirectToAction("Login");
+        }
+
+        public ActionResult Lockscreen()
+        {
+            return View();
         }
     }
 }

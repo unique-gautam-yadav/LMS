@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
@@ -13,11 +12,10 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <link rel="stylesheet" href="~/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css" />
     <link rel="stylesheet" href="/css/Admin/style.css">
     <style>
-        .login 
-        {
+        .login {
             background-color: rgba(47, 79,79, 0.4);
             border: 1px solid rgba(0, 0, 0, 0.125);
             border-radius: 0.25rem;
@@ -25,7 +23,6 @@
             border-radius: 30px;
             backdrop-filter: blur(6px)
         }
-
     </style>
 </head>
 <body class="img js-fullheight" style="background-image: url(/dist/img/GLA.jpg);">
@@ -33,7 +30,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-6 text-center mb-3">
-                    
+
                     <h2 class="heading-section">GLA University</h2>
                 </div>
             </div>
@@ -65,7 +62,7 @@
                                 </div>
                             </div>
                             <div class="social d-flex text-center">
-                                <a href="~/Home/Login" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> Student Portal</a>
+                                <a href="/Student/Login" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> Student Portal</a>
                             </div>
                         </form>
                     </div>
@@ -78,8 +75,32 @@
     <script src="/js/popper.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/main.js"></script>
+    <script src="/plugins/toastr/toastr.min.js"></script>
+    <script src="/plugins/sweetalert2/sweetalert2.min.js"></script>
     <script>
-        localStorage["PrevF"] = null;
+        console.log("@Model")
+        if (window.localStorage["PrevF"] == 'null' || window.localStorage["PrevF"] == undefined) {
+             if ("@Model" == "False") {
+                $(function () {
+                    var Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 4000
+                    });
+
+                    $(function () {
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Login Failed: Your user ID or password is incorrect'
+                        })
+                    });
+                });
+            }
+        }
+        else {
+            window.location.href = "/Admin/LockScreen"
+        }
     </script>
 
 </body>

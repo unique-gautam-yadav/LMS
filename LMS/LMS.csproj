@@ -2393,6 +2393,7 @@
     <Content Include="Views\Shared\Admin\_Offset.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Shared\Admin\_PageTitle.cshtml" />
+    <Content Include="Views\Admin\Lockscreen.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
