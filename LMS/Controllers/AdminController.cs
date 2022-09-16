@@ -110,5 +110,10 @@ namespace LMS.Controllers
         {
             return View();
         }
+
+        public ActionResult FileUpload()
+        {
+            return View();
+        }
     }
 }
