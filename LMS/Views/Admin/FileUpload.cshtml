@@ -1,8 +1,8 @@
-﻿
+﻿@modal LMS.Models.FileUpload
+
 @{
     ViewBag.Title = "FileUpload";
     Layout = "~/Views/Shared/Admin/_Layout.cshtml";
-    string n = "@";
 }
 <!-- Server side start -->
 <div class="col-12">
@@ -12,55 +12,59 @@
             <form class="needs-validation" novalidate="">
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
-                        <label for="validationCustom01">First name</label>
-                        <input type="text" class="form-control" id="validationCustom01" placeholder="First name" value="Mark" required="">
+                        <label for="yr">Year</label>
+                        <select required id="yr" class="form-control">
+                            <option value="1st Year">1st Year</option>
+                        </select>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
-                        <label for="validationCustom02">Last name</label>
-                        <input type="text" class="form-control" id="validationCustom02" placeholder="Last name" value="Otto" required="">
+                        <label for="sm">Semester</label>
+                        <select id="sm" class="form-control">
+                            <option value="1st Semester">1st Semester</option>
+                        </select>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
+                        <div class="invalid-feedback">
+                            This field is required
+                        </div>
                     </div>
                     <div class="col-md-4 mb-3">
-                        <label for="validationCustomUsername">Username</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroupPrepend">@n</span>
-                            </div>
-                            <input type="text" class="form-control" id="validationCustomUsername" placeholder="Username" aria-describedby="inputGroupPrepend" required="">
-                            <div class="invalid-feedback">
-                                Please choose a username.
-                            </div>
+                        <label for="sub">Subject</label>
+                        <select class="form-control" id="sub">
+                            <option onclick="console.log('kljdsfkljdsfj')" value="Subject 1">Subject 1</option>
+                            <option selected value="se">aklsf;djklj;asdf</option>
+                        </select>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            This field is required
                         </div>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="col-md-6 mb-3">
-                        <label for="validationCustom03">City</label>
-                        <input type="text" class="form-control" id="validationCustom03" placeholder="City" required="">
-                        <div class="invalid-feedback">
-                            Please provide a valid city.
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="validationCustom04">State</label>
-                        <input type="text" class="form-control" id="validationCustom04" placeholder="State" required="">
-                        <div class="invalid-feedback">
-                            Please provide a valid state.
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="validationCustom05">Zip</label>
-                        <input type="text" class="form-control" id="validationCustom05" placeholder="Zip" required="">
-                        <div class="invalid-feedback">
-                            Please provide a valid zip.
-                        </div>
-                    </div>
+
+
+                <b class="text-muted mb-1 mt-0 d-block">Select Document Type</b>
+                <div class="custom-control custom-radio mb-lg-2 custom-control-inline">
+                    <input value="Notes" type="radio" name="upload_type" class="custom-control-input" id="notes" />
+                    <label class="custom-control-label" for="notes">Notes</label>
                 </div>
+
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input value="Syllabus" type="radio" name="upload_type" class="custom-control-input" id="syy" />
+                    <label class="custom-control-label" for="syy">Syllabus</label>
+                </div>
+
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input value="Assignment" type="radio" name="upload_type" class="custom-control-input" id="ass" />
+                    <label class="custom-control-label" for="ass">Assignment</label>
+                </div>
+
+
                 <div class="input-group mb-3">
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" id="inputGroupFile02">
@@ -72,7 +76,7 @@
                 </div>
                 <div class="form-group">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required="">
+                        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
                         <label class="form-check-label" for="invalidCheck">
                             Agree to terms and conditions
                         </label>

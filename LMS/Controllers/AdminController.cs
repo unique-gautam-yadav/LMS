@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Configuration;
+using System.Data;
+using LMS.Models;
 
 namespace LMS.Controllers
 {
@@ -21,15 +23,15 @@ namespace LMS.Controllers
             }
             else
             {
-            Response.Cache.SetNoStore();
-            return View(loginstatus);
+                Response.Cache.SetNoStore();
+                return View(loginstatus);
             }
         }
         [HttpPost]
         public ActionResult Login(FormCollection collection, Models.Login log)
         {
             if (Session["uname"] != null && Session["FName"] != null)
-            { 
+            {
                 return RedirectToAction("Index");
             }
             else
@@ -111,8 +113,26 @@ namespace LMS.Controllers
             return View();
         }
 
-        public ActionResult FileUpload()
+        public ActionResult FileUpload(FileUpload modal)
         {
+            DataTable dataTable = new DataTable();
+            DataTable dataTable1 = new DataTable();
+            using (SqlConnection conn = new SqlConnection(DataBase))
+            {
+                conn.Open();
+                string sql = "select * from Diploma_CS where ParentID = 0";
+                using (SqlDataAdapter ad = new SqlDataAdapter(sql, conn))
+                {
+                    ad.Fill(dataTable);
+                }
+                string sql1 = "select * from Diploma_CS";
+                using (SqlDataAdapter ad = new SqlDataAdapter(sql1, conn))
+                {
+                    ad.Fill(dataTable1);
+                }
+            }
+            modal.all = dataTable1;
+            modal.parent = dataTable;
             return View();
         }
     }
