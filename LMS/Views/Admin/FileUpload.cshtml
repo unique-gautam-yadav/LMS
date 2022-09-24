@@ -1,9 +1,28 @@
-﻿@modal LMS.Models.FileUpload
-
-@{
+﻿@{
     ViewBag.Title = "FileUpload";
     Layout = "~/Views/Shared/Admin/_Layout.cshtml";
+    System.Data.DataTable dt = Session["subt"] as System.Data.DataTable;
+    System.Data.DataTable dt1 = Session["subt1"] as System.Data.DataTable;
 }
+
+<script>
+    var allDt = []
+</script>
+
+@for(int i = 0; i<dt1.Rows.Count; i++)
+            {
+                <script>
+                    var dict = {}
+                    dict ["ID"] = '@dt1.Rows[i][0]'
+                    dict ["Name"] = '@dt1.Rows[i][1]'
+                    dict ["URL"] = '@dt1.Rows[i][2]'
+                    dict ["ParentID"] = '@dt1.Rows[i][3]'
+
+                    allDt[@i] = dict;
+
+                    delete(dict)
+                </script>
+            }
 <!-- Server side start -->
 <div class="col-12">
     <div class="card mt-5">
@@ -12,18 +31,22 @@
             <form class="needs-validation" novalidate="">
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
-                        <label for="yr">Year</label>
-                        <select required id="yr" class="form-control">
-                            <option value="1st Year">1st Year</option>
+                        <label for="Year">Year</label>
+                        <select required id="Year" onchange="changed('Year', 'Semester')" class="form-control">
+                            <option value="none" selected disabled hidden>Select Year</option>
+                            @for (int i = 0; i < dt.Rows.Count; i++)
+                            {
+                                <option value="@dt.Rows[i][1]">@dt.Rows[i][1]</option>
+                            }
                         </select>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
-                        <label for="sm">Semester</label>
-                        <select id="sm" class="form-control">
-                            <option value="1st Semester">1st Semester</option>
+                        <label for="Semester">Semester</label>
+                        <select onchange="changed('Semester', 'Subject')" id="Semester" class="form-control">
+                            <option value="none" selected disabled hidden>Select Semester</option>
                         </select>
                         <div class="valid-feedback">
                             Looks good!
@@ -33,10 +56,9 @@
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
-                        <label for="sub">Subject</label>
-                        <select class="form-control" id="sub">
-                            <option onclick="console.log('kljdsfkljdsfj')" value="Subject 1">Subject 1</option>
-                            <option selected value="se">aklsf;djklj;asdf</option>
+                        <label for="Subject">Subject</label>
+                        <select class="form-control" id="Subject">
+                            <option value="none" selected disabled hidden>Select Subject</option>
                         </select>
                         <div class="valid-feedback">
                             Looks good!
@@ -91,3 +113,54 @@
     </div>
 </div>
 <!-- Server side end -->
+
+
+<script>
+    function changed(cur, child) {
+
+        var val = document.getElementById(cur).value;
+        var select = document.getElementById(child)
+
+        var chld = select.lastChild;
+
+        while (chld) {
+            select.removeChild(chld)
+            chld = select.lastChild
+        }
+
+        var dOpt = new Option("Select " + child, 'none', true, true)
+        dOpt.setAttribute("hidden", "");
+
+        select.appendChild(dOpt)
+
+        var pID;
+        for (var i = 0; i < allDt.length; i++) {
+            var temp = allDt[i];
+            if (temp['Name'] == val) {
+                pID = temp['ID'];
+            }
+        }
+        for (var i = 0; i < allDt.length; i++) {
+            var temp = allDt[i];
+            if (temp['ParentID'] == pID) {
+                var microTemp = temp['Name']
+                let opt = new Option(microTemp, microTemp);
+                console.log(opt)
+                select.appendChild(opt)
+            }
+        }
+        if (cur == 'Year') {
+            var gc = document.getElementById('Subject')
+            var chldd = gc.lastChild
+            while (chldd) {
+                gc.removeChild(chldd)
+                chldd = gc.lastChild
+            }
+
+            var dOptt = new Option("Select Subject", 'none', true, true)
+            dOptt.setAttribute("hidden", "");
+
+            gc.appendChild(dOptt)
+        }
+    }
+</script>

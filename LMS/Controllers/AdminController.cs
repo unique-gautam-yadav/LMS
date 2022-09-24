@@ -131,8 +131,9 @@ namespace LMS.Controllers
                     ad.Fill(dataTable1);
                 }
             }
-            modal.all = dataTable1;
-            modal.parent = dataTable;
+            Session["subt"] = dataTable;
+            Session["subt1"] = dataTable1;
+
             return View();
         }
     }
