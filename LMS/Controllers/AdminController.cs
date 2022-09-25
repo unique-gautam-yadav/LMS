@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Configuration;
 using System.Data;
 using LMS.Models;
+using System.IO;
 
 namespace LMS.Controllers
 {
@@ -113,7 +114,13 @@ namespace LMS.Controllers
             return View();
         }
 
-        public ActionResult FileUpload(FileUpload modal)
+        [HttpPost]
+        public ActionResult FileUpload(string subb)
+        {
+            return RedirectToAction(subb);
+        }
+
+        public ActionResult FileUpload()
         {
             DataTable dataTable = new DataTable();
             DataTable dataTable1 = new DataTable();
@@ -134,6 +141,33 @@ namespace LMS.Controllers
             Session["subt"] = dataTable;
             Session["subt1"] = dataTable1;
 
+            return View();
+        }
+        [HttpPost]
+        public ActionResult SubmitFile(Uploader model)
+        {
+            /* 
+            string fileName = Path.GetFileNameWithoutExtension(model.filee.FileName);
+           string extenssionName = Path.GetExtension(model.filee.FileName);
+
+            fileName = DateTime.Now.ToString("yyMMdd") + "-" + fileName.Trim() + extenssionName;
+
+            string uploadPath = "~/UploadedFiles";
+
+            string finUploadPath = uploadPath + fileName;
+
+            model.filee.SaveAs(finUploadPath); */
+
+            if (model.filee == null)
+            {
+                return null;
+            }
+
+            return RedirectToAction("FileUpload");
+        }
+
+        public ActionResult Test(Uploader model)
+        {
             return View();
         }
     }
