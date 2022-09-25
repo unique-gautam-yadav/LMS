@@ -5,6 +5,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Configuration;
+using System.Data;
+using LMS.Models;
+using System.IO;
 
 namespace LMS.Controllers
 {
@@ -21,15 +24,15 @@ namespace LMS.Controllers
             }
             else
             {
-            Response.Cache.SetNoStore();
-            return View(loginstatus);
+                Response.Cache.SetNoStore();
+                return View(loginstatus);
             }
         }
         [HttpPost]
         public ActionResult Login(FormCollection collection, Models.Login log)
         {
             if (Session["uname"] != null && Session["FName"] != null)
-            { 
+            {
                 return RedirectToAction("Index");
             }
             else
@@ -107,6 +110,63 @@ namespace LMS.Controllers
         }
 
         public ActionResult Lockscreen()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult FileUpload(string subb)
+        {
+            return RedirectToAction(subb);
+        }
+
+        public ActionResult FileUpload()
+        {
+            DataTable dataTable = new DataTable();
+            DataTable dataTable1 = new DataTable();
+            using (SqlConnection conn = new SqlConnection(DataBase))
+            {
+                conn.Open();
+                string sql = "select * from Diploma_CS where ParentID = 0";
+                using (SqlDataAdapter ad = new SqlDataAdapter(sql, conn))
+                {
+                    ad.Fill(dataTable);
+                }
+                string sql1 = "select * from Diploma_CS";
+                using (SqlDataAdapter ad = new SqlDataAdapter(sql1, conn))
+                {
+                    ad.Fill(dataTable1);
+                }
+            }
+            Session["subt"] = dataTable;
+            Session["subt1"] = dataTable1;
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult SubmitFile(Uploader model)
+        {
+            /* 
+            string fileName = Path.GetFileNameWithoutExtension(model.filee.FileName);
+           string extenssionName = Path.GetExtension(model.filee.FileName);
+
+            fileName = DateTime.Now.ToString("yyMMdd") + "-" + fileName.Trim() + extenssionName;
+
+            string uploadPath = "~/UploadedFiles";
+
+            string finUploadPath = uploadPath + fileName;
+
+            model.filee.SaveAs(finUploadPath); */
+
+            if (model.filee == null)
+            {
+                return null;
+            }
+
+            return RedirectToAction("FileUpload");
+        }
+
+        public ActionResult Test(Uploader model)
         {
             return View();
         }

@@ -123,6 +123,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Uploader.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -2393,9 +2394,11 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Shared\Admin\_PageTitle.cshtml" />
     <Content Include="Views\Admin\Lockscreen.cshtml" />
+    <Content Include="Views\Admin\FileUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="UploadedFiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
