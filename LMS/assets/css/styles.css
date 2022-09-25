@@ -143,11 +143,21 @@
     background: #303641;
     border-bottom: 1px solid #343e50;
 }
-.sidebar-menu .logo{
-    text-align: center;
+.sidebar-menu .logo {
+{
+    float: left;
+    line-height: .8;
+    margin-left: 0.8rem;
+    margin-right: 0.5rem;
+    margin-top: -3px;
+    max-height: 33px;
+    width: auto;
+}
+
 }
 .logo a {
     display: inline-block;
+    color: rgb(0 0 0 / 80%);
     max-width: 120px;
 }
 
