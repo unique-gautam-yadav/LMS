@@ -5350,7 +5350,7 @@ a.badge-dark:focus, a.badge-dark.focus {
 
 @media (min-width: 576px) {
   .jumbotron {
-    padding: 2rem 1rem;
+    padding: 1rem 1rem;
   }
 }
 
@@ -8266,7 +8266,7 @@ button.bg-dark:focus {
 
 .mt-1,
 .my-1 {
-  margin-top: 0.25rem !important;
+  margin-top: 0rem !important;
 }
 
 .mr-1,
@@ -12629,8 +12629,8 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 }
 
 .user-panel img {
-  height: auto;
-  width: 2.1rem;
+  height: 2.5rem;
+  width: 3rem;
 }
 
 .user-panel .info {
@@ -34907,20 +34907,20 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
 }
 
 .lockscreen-image {
-  border-radius: 50%;
-  background-color: #fff;
-  left: -10px;
-  padding: 5px;
-  position: absolute;
-  top: -25px;
-  z-index: 10;
+    border-radius: 100%;
+    background-color: #fff;
+    left: -8px;
+    padding: 5px;
+    position: absolute;
+    top: -12px;
+    z-index: 10
 }
 
-.lockscreen-image > img {
-  border-radius: 50%;
-  height: 70px;
-  width: 70px;
-}
+    .lockscreen-image > img {
+        border-radius: 50%;
+        height: 55px;
+        width: 60px
+    }
 
 .lockscreen-credentials {
   margin-left: 70px;
@@ -45794,7 +45794,7 @@ blockquote.quote-gray-dark h6 {
 }
 
 .elevation-2 {
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23) !important;
+  box-shadow: 0 2.5rem 3rem rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23) !important;
 }
 
 .elevation-3 {
