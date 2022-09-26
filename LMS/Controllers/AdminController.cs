@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Data;
 using LMS.Models;
 using System.IO;
+using static System.Net.WebRequestMethods;
 
 namespace LMS.Controllers
 {
@@ -114,12 +115,6 @@ namespace LMS.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult FileUpload(string subb)
-        {
-            return RedirectToAction(subb);
-        }
-
         public ActionResult FileUpload()
         {
             DataTable dataTable = new DataTable();
@@ -144,30 +139,24 @@ namespace LMS.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult SubmitFile(Uploader model)
+        public ActionResult FileUpload(Uploader model)
         {
-            /* 
-            string fileName = Path.GetFileNameWithoutExtension(model.filee.FileName);
-           string extenssionName = Path.GetExtension(model.filee.FileName);
 
-            fileName = DateTime.Now.ToString("yyMMdd") + "-" + fileName.Trim() + extenssionName;
-
-            string uploadPath = "~/UploadedFiles";
-
-            string finUploadPath = uploadPath + fileName;
-
-            model.filee.SaveAs(finUploadPath); */
-
-            if (model.filee == null)
+            if (model.filee != null && model.filee.ContentLength > 0)
+                try
+                {
+                    string path = Path.Combine("D:/LMS", Path.GetFileName(model.filee.FileName));
+                    model.filee.SaveAs(path);
+                    ViewBag.Message = "File uploaded successfully";
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                }
+            else
             {
-                return null;
+                ViewBag.Message = "You have not specified a file.";
             }
-
-            return RedirectToAction("FileUpload");
-        }
-
-        public ActionResult Test(Uploader model)
-        {
             return View();
         }
     }

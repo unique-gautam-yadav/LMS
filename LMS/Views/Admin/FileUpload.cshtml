@@ -30,7 +30,7 @@
     <div class="card mt-5">
         <div class="card-body">
             <h4 class="header-title">Server side</h4>
-            @using(Html.BeginForm())
+            @using(Html.BeginForm("FileUpload", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
@@ -112,6 +112,7 @@
                 </div>
                 <button class="btn btn-primary" type="submit">Submit form</button>
             }
+            @ViewBag.Message
         </div>
     </div>
 </div>
