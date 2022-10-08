@@ -32,6 +32,13 @@
             <h4 class="header-title">Server side</h4>
             @using(Html.BeginForm("FileUpload", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
+                <div class="form-group">
+                    <label for="enterTitle" class="col-form-label">Title</label>
+                    <input id="enterTitle" class="form-control" type="text" required placeholder="Enter Title" name="title" />
+                    <div class="invalid-feedback">
+                        This field is required
+                    </div>
+                </div>
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
                         <label for="Year">Year</label>

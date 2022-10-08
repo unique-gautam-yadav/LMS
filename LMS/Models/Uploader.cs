@@ -8,6 +8,7 @@ namespace LMS.Models
 {
     public class Uploader
     {
+        public string title { get;  set; }
         public string yrr { get; set; }
         public string semm { get; set; }
         public string subb { get;  set;}
