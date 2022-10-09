@@ -30,7 +30,7 @@
     <div class="card mt-5">
         <div class="card-body">
             <h4 class="header-title">Server side</h4>
-            @using(Html.BeginForm("FileUpload", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("FileUpload", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <div class="form-group">
                     <label for="enterTitle" class="col-form-label">Title</label>
@@ -99,12 +99,14 @@
 
                 <div class="input-group mb-3">
                     <div class="custom-file">
-                        <input name="filee" type="file" class="custom-file-input" id="inputGroupFile02">
-                        <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                        <input name="filee" onchange="fileChange()" type="file" class="custom-file-input" id="inputGroupFile02">
+                        <label id="fileLabel" class="custom-file-label" for="inputGroupFile02">Choose file</label>
                     </div>
+                    <!--
                     <div class="input-group-append">
                         <span class="input-group-text">Upload</span>
                     </div>
+                        -->
                 </div>
                 <div class="form-group">
                     <div class="form-check">
@@ -127,6 +129,13 @@
 
 
 <script>
+
+    function fileChange() {
+        file = document.getElementsByName('filee')[0].files[0]['name']
+        document.getElementById('fileLabel').innerHTML = file
+    }
+
+
     function changed(cur, child) {
 
         var val = document.getElementById(cur).value;
@@ -156,7 +165,6 @@
             if (temp['ParentID'] == pID) {
                 var microTemp = temp['Name']
                 let opt = new Option(microTemp, microTemp);
-                console.log(opt)
                 select.appendChild(opt)
             }
         }
