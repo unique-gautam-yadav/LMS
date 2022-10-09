@@ -141,13 +141,12 @@ namespace LMS.Controllers
 
             if (model.filee != null && model.filee.ContentLength > 0)
             {
-                        int nnm = 0;
                 try
                 {
                     string ext = Path.GetExtension(model.filee.FileName);
                     DateTime cur = DateTime.Now;
                     string dtt = cur.Year.ToString() + cur.Month.ToString() + cur.Day.ToString() + cur.Hour.ToString() + cur.Minute.ToString() + cur.Second.ToString();
-                    string path = Path.Combine("D:/LMS",  model.title.Replace(' ', '_') + "_" + dtt + ext);
+                    string path = Path.Combine("D:/LMS", model.upload_type , dtt + "_" + model.title.Remove(' ') + ext);
 
                     int parentI = 0;
 
@@ -162,11 +161,9 @@ namespace LMS.Controllers
                         {
                             cmd.Parameters.AddWithValue("@subject", model.subb);
                             SqlDataReader rd = cmd.ExecuteReader();
-                            nnm++;
                             while (rd.Read())
                             {
                                 parentI = rd.GetInt32(0);
-                                nnm++;
                             }
                             rd.Close();
                         }
@@ -174,7 +171,6 @@ namespace LMS.Controllers
                         {
                             using (SqlCommand cmd = new SqlCommand(sql2, conn))
                             {
-                                nnm++;
                                 cmd.Parameters.AddWithValue("@title", model.title);
                                 cmd.Parameters.AddWithValue("@type", model.upload_type);
                                 cmd.Parameters.AddWithValue("@path", path);
@@ -187,13 +183,13 @@ namespace LMS.Controllers
                         }
                         else
                         {
-                            ViewBag.Message = "We're sorry!! Something went wrong!! " + nnm;
+                            ViewBag.Message = "We're sorry!! Something went wrong.";
                         }
                     }
                 }
-                catch (Exception ex)
+                catch // (Exception ex)
                 {
-                    ViewBag.Message = ex.Message + " ==> " + nnm;
+                    ViewBag.Message = "We're Sorry!! Something went wrong.";
                 }
             }
             else

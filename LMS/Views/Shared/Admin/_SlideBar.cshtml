@@ -1,8 +1,9 @@
 ﻿<div class="sidebar-menu">
     <div class="sidebar-header">
-        <div class="logo">
-            <a href="/Admin/Index"><img src="~/dist/img/Logo.png" alt="GLA">GLA University</a>
-        </div>
+            <div style="text-align : center;" class="logo">
+                <a href="/Admin"><img src="~/dist/img/Logo.png"></a>
+                <p onclick="redirect()" style="color : white; font-weight : 700; font-size : 19px; cursor : pointer;">GLA University</p>
+            </div>
     </div>
     <div class="main-menu">
         <div class="menu-inner">
@@ -21,3 +22,9 @@
         </div>
     </div>
 </div>
+
+<script>
+    function redirect() {
+        document.location = "/Admin"
+    }
+</script>
