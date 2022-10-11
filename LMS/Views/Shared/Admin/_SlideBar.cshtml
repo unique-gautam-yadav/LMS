@@ -1,8 +1,8 @@
 ﻿<div class="sidebar-menu">
     <div class="sidebar-header">
             <div style="text-align : center;" class="logo">
-                <a href="/Admin"><img src="~/dist/img/Logo.png"></a>
-                <p onclick="document.location = '/Admin'" style="color : white; font-weight : 700; font-size : 19px; cursor : pointer;">GLA University</p>
+                <a href="@Url.Action("Index", "Admin")"><img src="~/dist/img/Logo.png"></a>
+                <p onclick="document.location = '~/Admin'" style="color : white; font-weight : 700; font-size : 19px; cursor : pointer;">GLA University</p>
             </div>
     </div>
     <div class="main-menu">
@@ -12,7 +12,7 @@
                     <li class="active">
                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-dashboard"></i><span>dashboard</span></a>
                         <ul class="collapse">
-                            <li class="active"><a href="/Admin/FileUpload">File Upload</a></li>
+                            <li class="active"><a href="@Url.Action("FileUpload", "Admin")">File Upload</a></li>
                             <li><a href="">Ecommerce dashboard</a></li>
                             <li><a href="">SEO dashboard</a></li>
                         </ul>

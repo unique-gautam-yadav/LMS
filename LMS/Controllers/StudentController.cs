@@ -16,12 +16,20 @@ namespace LMS.Controllers
         string DataBase = ConfigurationManager.ConnectionStrings["DataBase"].ConnectionString;
         public ActionResult Index()
         {
+            /*
+            Session["Course"] = "Diploma";
+            Session["Branch"] = "CS";
+            Session["uname"] = "Gautam";
+            Session["Name"] = "Gautam Yadav";
+            Session["ID"] = "32";
+            Session["Roll"] = "203500024";
+            */
             DataTable dataTable = new DataTable();
             DataTable dataTable1 = new DataTable();
             Response.Cache.SetNoStore();
             if (Session["uname"] == null)
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Login", "Student");
             }
             else
             {
@@ -49,7 +57,7 @@ namespace LMS.Controllers
         {
             if (Session["uname"] == null)
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Login", "Student");
 
             }
             else
@@ -63,7 +71,7 @@ namespace LMS.Controllers
         {
             if (Session["uname"] == null)
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Login", "Student");
             }
             else
             {
@@ -77,7 +85,7 @@ namespace LMS.Controllers
             Response.Cache.SetNoStore();
             if (Session["uname"] != null)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Student");
             }
             else
             {
@@ -91,7 +99,7 @@ namespace LMS.Controllers
         {
             if (Session["uname"] != null)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Student");
             }
             else
             {
@@ -130,7 +138,7 @@ namespace LMS.Controllers
                             cmd.ExecuteNonQuery();
                         }
                         Response.Write(log.remember);
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index", "Student");
 
                     }
                     else
@@ -138,7 +146,7 @@ namespace LMS.Controllers
                         Session["uname"] = null;
                         Session["uid"] = null;
                         Session["Name"] = null;
-                        return RedirectToAction("Login", new { @loginstatus = false });
+                        return RedirectToAction("Login", "Student", new { @loginstatus = false });
                     }
                 }
 
@@ -153,7 +161,7 @@ namespace LMS.Controllers
             Session["Roll"] = null;
             Session["Course"] = null;
             Session["Branch"] = null;
-            return RedirectToAction("Login");
+            return RedirectToAction("Login", "Student");
 
         }
 
@@ -162,7 +170,7 @@ namespace LMS.Controllers
             Response.Cache.SetNoStore();
             if (Session["uname"] != null)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Student");
             }
             else
             {

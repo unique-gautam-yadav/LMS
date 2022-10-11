@@ -42,7 +42,8 @@
                     <div class="login-wrap login">
                         <h3 class="mb-4 text-center">Student Portal</h3>
                         <div class="card-body">
-                            <form action="Login" method="post">
+                            @using (Html.BeginForm("Login", "Student", FormMethod.Post))
+                            {
                                 <div class="input-group mb-3">
                                     <input autocomplete="off" required name="uname" type="text" class="form-control" placeholder="User Name">
                                 </div>
@@ -68,7 +69,7 @@
                                 <div class="social d-flex text-center">
                                     <a href="~/Admin/Login" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> Faculty Portal</a>
                                 </div>
-                            </form>
+                            }
                         </div>
                     </div>
                 </div>
