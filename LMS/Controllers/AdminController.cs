@@ -146,7 +146,7 @@ namespace LMS.Controllers
                     string ext = Path.GetExtension(model.filee.FileName);
                     DateTime cur = DateTime.Now;
                     string dtt = cur.Year.ToString() + cur.Month.ToString() + cur.Day.ToString() + cur.Hour.ToString() + cur.Minute.ToString() + cur.Second.ToString();
-                    string path = Path.Combine("D:/LMS", model.upload_type , dtt + "_" + model.title.Remove(' ') + ext);
+                    string path = Path.Combine("D:/LMS", model.upload_type , dtt + "_" + model.title.Replace(' ', '_').Trim() + ext);
 
                     int parentI = 0;
 
@@ -187,9 +187,9 @@ namespace LMS.Controllers
                         }
                     }
                 }
-                catch // (Exception ex)
+                catch (Exception ex)
                 {
-                    ViewBag.Message = "We're Sorry!! Something went wrong.";
+                    ViewBag.Message = "We're Sorry!! Something went wrong." + ex.Message;
                 }
             }
             else
