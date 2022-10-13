@@ -82,20 +82,30 @@
 
                 <b class="text-muted mb-1 mt-0 d-block">Select Document Type</b>
                 <div class="custom-control custom-radio mb-lg-2 custom-control-inline">
-                    <input value="Notes" type="radio" name="upload_type" class="custom-control-input" id="notes" />
+                    <input onclick="removeLastDate()" value="Notes" type="radio" name="upload_type" class="custom-control-input" id="notes" />
                     <label class="custom-control-label" for="notes">Notes</label>
                 </div>
 
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input value="Syllabus" type="radio" name="upload_type" class="custom-control-input" id="syy" />
+                    <input onclick="removeLastDate()" value="Syllabus" type="radio" name="upload_type" class="custom-control-input" id="syy" />
                     <label class="custom-control-label" for="syy">Syllabus</label>
                 </div>
 
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input value="Assignment" type="radio" name="upload_type" class="custom-control-input" id="ass" />
+                    <input onclick="showLastDate()" value="Assignment" type="radio" name="upload_type" class="custom-control-input" id="ass" />
                     <label class="custom-control-label" for="ass">Assignment</label>
                 </div>
-
+                <div style="display : none;" id="dateTimeInputGroup" class="form-group">
+                    <label for="lastDateInput" class="col-form-label">Last Date</label>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3 form-group">
+                            <input class="form-control" id="lastDateInput" type="date" />
+                        </div>
+                        <div class="col-md-6 mb-3 form-group">
+                            <input value="00:00" class="form-control" id="lastDateTime" type="time" />
+                        </div>
+                    </div>
+                </div>
 
                 <div class="input-group mb-3">
                     <div class="custom-file">
@@ -149,6 +159,14 @@
 
 
 <script>
+
+    function showLastDate() {
+        document.getElementById("dateTimeInputGroup").style = "display : block;"
+    }
+
+    function removeLastDate() {
+        document.getElementById("dateTimeInputGroup").style = "display : none;"
+    }
 
     function fileChange() {
         file = document.getElementsByName('filee')[0].files[0]['name']

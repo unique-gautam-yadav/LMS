@@ -14,5 +14,7 @@ namespace LMS.Models
         public string subb { get;  set;}
         public string upload_type { get; set; }
         public HttpPostedFileBase filee { get; set; }
+        public string lastDateOnly { get; set; }
+        public string lastTimeOnly { get; set; }
     }
 }
