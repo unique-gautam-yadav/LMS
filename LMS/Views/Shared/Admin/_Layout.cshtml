@@ -123,6 +123,15 @@
     <script src="~/assets/js/plugins.js"></script>
     <script src="~/assets/js/scripts.js"></script>
     <script>
+
+        window.onload = function () {
+            noBack();
+        }
+
+        function noBack() {
+            window.history.forward();
+        }
+
         localStorage["PrevF"] = null
     function logout() {
         var ch = confirm("Do you want to save account.")

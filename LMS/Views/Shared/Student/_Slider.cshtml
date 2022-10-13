@@ -70,7 +70,7 @@
                                             {
                                                 <ul class="nav nav-treeview">
                                                     <li class="nav-item">
-                                                        <a href="#" class="nav-link">
+                                                        <a href="@Url.Action("Subject", "Student", new { subId = dtbl1.Rows[k][0], subName = dtbl1.Rows[k][1] })" class="nav-link">
                                                             <i class="nav-icon fas fa-book"></i>
                                                             <p class="pl-3">@dtbl1.Rows[k][1]</p>
                                                         </a>

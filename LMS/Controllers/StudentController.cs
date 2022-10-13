@@ -16,14 +16,6 @@ namespace LMS.Controllers
         string DataBase = ConfigurationManager.ConnectionStrings["DataBase"].ConnectionString;
         public ActionResult Index()
         {
-            /*
-            Session["Course"] = "Diploma";
-            Session["Branch"] = "CS";
-            Session["uname"] = "Gautam";
-            Session["Name"] = "Gautam Yadav";
-            Session["ID"] = "32";
-            Session["Roll"] = "203500024";
-            */
             DataTable dataTable = new DataTable();
             DataTable dataTable1 = new DataTable();
             Response.Cache.SetNoStore();
@@ -176,6 +168,11 @@ namespace LMS.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult Subject(int subId, string subName)
+        {
+            return View();
         }
     }
 

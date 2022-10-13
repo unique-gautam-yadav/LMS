@@ -36,7 +36,7 @@
                 <form action="Login" method="post">
                     <div class="login-form-head">
                         <h4>Lockscreen</h4>
-                        <p>Hey,&nbsp;&nbsp; <span id="PrevF"></span>! Unlock Your Screen.</p>
+                        <p>Hey,&nbsp;&nbsp; <strong><span id="PrevF"></span></strong> ! Unlock Your Screen.</p>
                     </div>
                     <div class="login-form-body">
                         <div class="form-gp">
@@ -72,6 +72,16 @@
     <script src="/assets/js/plugins.js"></script>
     <script src="/assets/js/scripts.js"></script>
     <script>
+
+        window.onload = function () {
+            noBack();
+        }
+
+        function noBack() {
+            window.history.forward();
+        }
+
+
         if (localStorage["PrevF"] == 'null'|| localStorage["PrevF"] == undefined) {
             window.location.href = "/Admin/Login"
         } else {

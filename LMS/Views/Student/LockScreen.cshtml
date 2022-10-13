@@ -69,6 +69,16 @@
         <!-- Bootstrap 4 -->
         <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script>
+
+            window.onload = function () {
+                noBack();
+            }
+
+            function noBack() {
+                window.history.forward();
+            }
+
+
             if (localStorage["PrevUsr"] == 'null' && localStorage["PrevRoll"] == 'null' ||
                 localStorage["PrevUsr"] == undefined && localStorage["PrevRoll"] == undefined) {
                 window.location.href = "/Student/Login"

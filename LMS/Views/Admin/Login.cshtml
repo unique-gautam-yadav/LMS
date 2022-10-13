@@ -5,7 +5,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>GLA University</title>
+    <title>Faculty Portal || GLA University</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -40,10 +40,10 @@
                         <h3 class="mb-4 text-center">Faculty Portal</h3>
                         <form action="Login" class="signin-form" method="post">
                             <div class="form-group">
-                                <input name="uname" type="text" class="form-control" placeholder="Username" required>
+                                <input autocomplete="off" name="uname" type="text" class="form-control" placeholder="Username" required>
                             </div>
                             <div class="form-group">
-                                <input name="password" id="password-field" type="password" class="form-control" placeholder="Password" required>
+                                <input autocomplete="off" name="password" id="password-field" type="password" class="form-control" placeholder="Password" required>
                                 <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                             </div>
                             <div class="form-group">
@@ -78,6 +78,15 @@
     <script src="/plugins/toastr/toastr.min.js"></script>
     <script src="/plugins/sweetalert2/sweetalert2.min.js"></script>
     <script>
+
+        window.onload = function () {
+            noBack();
+        }
+
+        function noBack() {
+            window.history.forward();
+        }
+
         console.log("@Model")
         if (window.localStorage["PrevF"] == 'null' || window.localStorage["PrevF"] == undefined) {
              if ("@Model" == "False") {

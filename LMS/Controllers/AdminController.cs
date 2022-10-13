@@ -16,6 +16,7 @@ namespace LMS.Controllers
         [HttpGet]
         public ActionResult Login(bool loginstatus = true)
         {
+            Response.Cache.SetNoStore();
             if (Session["uid"] != null && Session["FName"] != null)
             {
                 return RedirectToAction("Index");
@@ -29,7 +30,7 @@ namespace LMS.Controllers
         [HttpPost]
         public ActionResult Login(FormCollection collection, Models.Login log)
         {
-            if (Session["uname"] != null && Session["FName"] != null)
+            if (Session["uid"] != null && Session["FName"] != null)
             {
                 return RedirectToAction("Index");
             }
@@ -86,6 +87,7 @@ namespace LMS.Controllers
 
         public ActionResult Index()
         {
+            Response.Cache.SetNoStore();
             if (Session["uid"] == null && Session["FName"] == null)
             {
                 return RedirectToAction("Login");
@@ -109,31 +111,41 @@ namespace LMS.Controllers
 
         public ActionResult Lockscreen()
         {
+            Response.Cache.SetNoStore();
             return View();
         }
 
         public ActionResult FileUpload()
         {
-            DataTable dataTable = new DataTable();
-            DataTable dataTable1 = new DataTable();
-            using (SqlConnection conn = new SqlConnection(DataBase))
+            if (Session["uid"] == null && Session["FName"] == null)
             {
-                conn.Open();
-                string sql = "select * from Diploma_CS where ParentID = 0";
-                using (SqlDataAdapter ad = new SqlDataAdapter(sql, conn))
-                {
-                    ad.Fill(dataTable);
-                }
-                string sql1 = "select * from Diploma_CS";
-                using (SqlDataAdapter ad = new SqlDataAdapter(sql1, conn))
-                {
-                    ad.Fill(dataTable1);
-                }
+                return RedirectToAction("Login");
             }
-            Session["subt"] = dataTable;
-            Session["subt1"] = dataTable1;
+            else
+            {
 
-            return View();
+                DataTable dataTable = new DataTable();
+                DataTable dataTable1 = new DataTable();
+                using (SqlConnection conn = new SqlConnection(DataBase))
+                {
+                    conn.Open();
+                    string sql = "select * from Diploma_CS where ParentID = 0";
+                    using (SqlDataAdapter ad = new SqlDataAdapter(sql, conn))
+                    {
+                        ad.Fill(dataTable);
+                    }
+                    string sql1 = "select * from Diploma_CS";
+                    using (SqlDataAdapter ad = new SqlDataAdapter(sql1, conn))
+                    {
+                        ad.Fill(dataTable1);
+                    }
+                }
+                Session["subt"] = dataTable;
+                Session["subt1"] = dataTable1;
+
+                return View();
+            }
+
         }
         [HttpPost]
         public ActionResult FileUpload(Uploader model)
@@ -146,7 +158,7 @@ namespace LMS.Controllers
                     string ext = Path.GetExtension(model.filee.FileName);
                     DateTime cur = DateTime.Now;
                     string dtt = cur.Year.ToString() + cur.Month.ToString() + cur.Day.ToString() + cur.Hour.ToString() + cur.Minute.ToString() + cur.Second.ToString();
-                    string path = Path.Combine("D:/LMS", model.upload_type , dtt + "_" + model.title.Replace(' ', '_').Trim() + ext);
+                    string path = Path.Combine("D:/LMS", model.upload_type, dtt + "_" + model.title.Replace(' ', '_').Trim() + ext);
 
                     int parentI = 0;
 
@@ -155,8 +167,8 @@ namespace LMS.Controllers
                         conn.Open();
                         string sql1 = "SELECT Id FROM Diploma_CS WHERE Name = @subject";
 
-                        string sql2 = "INSERT INTO Docs_Diploma_CS ([Title], [Type], [Path], [SubjectID]) " +
-                            "VALUES (@title, @type, @path, @id)";
+                        string sql2 = "INSERT INTO Docs_Diploma_CS ([Title], [Type], [Path], [SubjectID], [uploadedOn], [uploadedBy]) " +
+                            "VALUES (@title, @type, @path, @id, CURRENT_TIMESTAMP, '"+ Session["FName"] +"')";
                         using (SqlCommand cmd = new SqlCommand(sql1, conn))
                         {
                             cmd.Parameters.AddWithValue("@subject", model.subb);
@@ -179,22 +191,22 @@ namespace LMS.Controllers
                                 cmd.ExecuteNonQuery();
                             }
                             model.filee.SaveAs(path);
-                            ViewBag.Message = "File uploaded successfully!!";
+                            ViewBag.UploadSatatus = "success";
                         }
                         else
                         {
-                            ViewBag.Message = "We're sorry!! Something went wrong.";
+                            ViewBag.UploadSatatus = "error";
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.Message = "We're Sorry!! Something went wrong." + ex.Message;
+                    ViewBag.UploadSatatus = "error";
                 }
             }
             else
             {
-                ViewBag.Message = "You have not specified a file.";
+                ViewBag.UploadSatatus = "nofile";
             }
             return View();
         }
