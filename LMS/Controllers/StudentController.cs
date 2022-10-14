@@ -174,6 +174,11 @@ namespace LMS.Controllers
         {
             return View();
         }
+
+        public ActionResult Dummy()
+        {
+            return View();
+        }
     }
 
 }

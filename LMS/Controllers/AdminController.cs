@@ -5,7 +5,7 @@ using System.Configuration;
 using System.Data;
 using LMS.Models;
 using System.IO;
-using static System.Net.WebRequestMethods;
+using System.Globalization;
 
 namespace LMS.Controllers
 {
@@ -164,11 +164,27 @@ namespace LMS.Controllers
 
                     using (SqlConnection conn = new SqlConnection(DataBase))
                     {
+                        string sql2;
+                        if (model.upload_type == "Assignment")
+                        {
+                            CultureInfo cultures = new CultureInfo("en-US");
+                            String date = model.lastDateOnly;
+                            String time = model.lastTimeOnly;
+                            String val = date + " " + time;
+                            DateTime res = Convert.ToDateTime(val, cultures);
+                            sql2 = "INSERT INTO Docs_Diploma_CS ([Title], [Type], [Path], [SubjectID], [uploadedOn], [uploadedBy] [lastDate]) " +
+                            "VALUES (@title, @type, @path, @id, CURRENT_TIMESTAMP, '" + Session["FName"] + "'" + res.ToString("MMMM dd yyyy h:mm tt") + ")";
+                        }
+                        else 
+                        //if (model.upload_type == "Notes" || model.upload_type == "Syllabus")
+                        {
+                            sql2 = "INSERT INTO Docs_Diploma_CS ([Title], [Type], [Path], [SubjectID], [uploadedOn], [uploadedBy]) " +
+                            "VALUES (@title, @type, @path, @id, CURRENT_TIMESTAMP, '" + Session["FName"] + "')";
+                        }
+                        
+                        Console.WriteLine("Converted DateTime value...");
                         conn.Open();
-                        string sql1 = "SELECT Id FROM Diploma_CS WHERE Name = @subject";
-
-                        string sql2 = "INSERT INTO Docs_Diploma_CS ([Title], [Type], [Path], [SubjectID], [uploadedOn], [uploadedBy]) " +
-                            "VALUES (@title, @type, @path, @id, CURRENT_TIMESTAMP, '"+ Session["FName"] +"')";
+                        string sql1 = "SELECT Id FROM Diploma_CS WHERE Name = @subject";                        
                         using (SqlCommand cmd = new SqlCommand(sql1, conn))
                         {
                             cmd.Parameters.AddWithValue("@subject", model.subb);

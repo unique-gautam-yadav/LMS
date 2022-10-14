@@ -125,6 +125,7 @@
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
@@ -2405,6 +2406,7 @@
     <Content Include="Views\Admin\Lockscreen.cshtml" />
     <Content Include="Views\Admin\FileUpload.cshtml" />
     <Content Include="Views\Student\Subject.cshtml" />
+    <Content Include="Views\Student\Dummy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
