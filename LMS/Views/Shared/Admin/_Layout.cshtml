@@ -137,7 +137,7 @@
         var ch = confirm("Do you want to save account.")
         if (ch == true) {
             localStorage["PrevF"] = "@Session["FName"]";
-            //localStorage["PrevI"] = "@Session["Roll"]";
+            localStorage["FID"] = "@Session["uid"]";
         }
         else {
             //localStorage["PrevUsr"] = null;

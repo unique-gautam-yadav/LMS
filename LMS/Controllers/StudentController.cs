@@ -172,12 +172,15 @@ namespace LMS.Controllers
 
         public ActionResult Subject(int subId, string subName)
         {
-            return View();
-        }
+            if (Session["uname"] != null)
+            {
+                return View();
 
-        public ActionResult Dummy()
-        {
-            return View();
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
         }
     }
 

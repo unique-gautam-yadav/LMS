@@ -7,7 +7,10 @@
         </div>
         <div class="col-sm-6 clearfix">
             <div class="user-profile pull-right">
-                <img class="avatar user-thumb" src="/assets/images/author/avatar.png" alt="avatar">
+                @{ 
+                    string src = "https://glauniversity.in:8096/assets/profiles/" + Session["FID"] + ".jpg";
+                }
+                <img class="avatar user-thumb" src="@src" alt="avatar">
                 <h4 class="user-name dropdown-toggle" data-toggle="dropdown">@Session["FName"]<i class="fa fa-angle-down"></i>
                 </h4>
                 <div class="dropdown-menu">

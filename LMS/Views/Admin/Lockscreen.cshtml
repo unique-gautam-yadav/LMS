@@ -33,7 +33,9 @@
     <div class="login-area">
         <div class="container">
             <div class="login-box ptb--100">
-                <form action="Login" method="post">
+                @using (Html.BeginForm("Login", "Admin", FormMethod.Post))
+                {
+                    //<form action="Login" method="post">
                     <div class="login-form-head">
                         <h4>Lockscreen</h4>
                         <p>Hey,&nbsp;&nbsp; <strong><span id="PrevF"></span></strong> ! Unlock Your Screen.</p>
@@ -53,7 +55,7 @@
                             <a onclick="redirectToLogin()" href="#">Or sign in as a different user</a>
                         </div>
                     </div>
-                </form>
+                }
             </div>
         </div>
     </div>
@@ -86,7 +88,7 @@
             window.location.href = "/Admin/Login"
         } else {
             document.getElementById("PrevF").innerHTML = localStorage["PrevF"];
-            document.getElementById("uname").value = localStorage["PrevF"];
+            document.getElementById("uname").value = localStorage["FID"];
             document.getElementById("uname").style = "display : none;"
 
             function redirectToLogin() {

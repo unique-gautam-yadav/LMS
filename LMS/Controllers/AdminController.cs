@@ -55,6 +55,7 @@ namespace LMS.Controllers
                                 Session["FName"] = rd.GetString(1);
                                 Session["ID"] = rd.GetInt32(0);
                                 Session["EID"] = rd.GetInt32(4);
+                                Session["FID"] = rd.GetString(8);
                                 n++;
                             }
                         }
