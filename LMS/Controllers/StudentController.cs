@@ -174,6 +174,35 @@ namespace LMS.Controllers
         {
             if (Session["uname"] != null)
             {
+                List<string> facultyDetials = new List<string>();
+                using(SqlConnection conn = new SqlConnection(DataBase))
+                {
+                    conn.Open();
+                    string sql1 = "select * from Faculty where Subjects like '%" + subName +"%'";
+                    using (SqlCommand cmd = new SqlCommand(sql1, conn))
+                    {
+                        int n = 0;
+                        SqlDataReader rd = cmd.ExecuteReader();
+                        while (rd.Read())
+                        {
+                            n++;
+                            facultyDetials.Add(rd.GetString(1));
+                            facultyDetials.Add(rd.GetString(9));
+                            facultyDetials.Add(rd.GetString(2));
+                            facultyDetials.Add("Phone not avalable!!");
+                            facultyDetials.Add("Email not avalable!!");
+                        }
+                        if (n > 0)
+                        {
+                            ViewBag.FacD = "no faculty found";
+                        }
+                        else
+                        {
+                            ViewBag.FacD = "faculty found";
+                        }
+                        ViewData["Faculty"] = facultyDetials;
+                    }
+                }
                 return View();
 
             }
