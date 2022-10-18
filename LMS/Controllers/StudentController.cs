@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
-using LMS.Models;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
@@ -175,12 +170,15 @@ namespace LMS.Controllers
             if (Session["uname"] != null)
             {
                 List<string> facultyDetials = new List<string>();
+                DataTable dataTable = new DataTable();
                 using(SqlConnection conn = new SqlConnection(DataBase))
                 {
                     conn.Open();
-                    string sql1 = "select * from Faculty where Subjects like '%" + subName +"%'";
+                    string sql1 = "select * from Faculty where Subjects like @sub";
+                    string sql2 = "select * from Docs_Diploma_CS where SubjectID = @id AND Type = @dType";
                     using (SqlCommand cmd = new SqlCommand(sql1, conn))
                     {
+                        cmd.Parameters.AddWithValue("@sub", ("%" + subName + "%"));
                         int n = 0;
                         SqlDataReader rd = cmd.ExecuteReader();
                         while (rd.Read())
@@ -189,9 +187,10 @@ namespace LMS.Controllers
                             facultyDetials.Add(rd.GetString(1));
                             facultyDetials.Add(rd.GetString(9));
                             facultyDetials.Add(rd.GetString(2));
-                            facultyDetials.Add("Phone not avalable!!");
-                            facultyDetials.Add("Email not avalable!!");
+                            facultyDetials.Add(rd.GetString(10));
+                            facultyDetials.Add(rd.GetString(11));
                         }
+                        rd.Close();
                         if (n > 0)
                         {
                             ViewBag.FacD = "no faculty found";
@@ -202,6 +201,31 @@ namespace LMS.Controllers
                         }
                         ViewData["Faculty"] = facultyDetials;
                     }
+                    using (SqlCommand cmd = new SqlCommand(sql2, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@id", subId);
+                        cmd.Parameters.AddWithValue("@dType", "Assignment");
+                        SqlDataAdapter ad = new SqlDataAdapter(cmd);
+                        ad.Fill(dataTable);
+                        ViewData["Assignments"] = dataTable;
+                    }
+                    using (SqlCommand cmd = new SqlCommand(sql2, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@id", subId);
+                        cmd.Parameters.AddWithValue("@dType", "Notes");
+                        SqlDataAdapter ad = new SqlDataAdapter(cmd);
+                        ad.Fill(dataTable);
+                        ViewData["Notes"] = dataTable;
+                    }
+                    using (SqlCommand cmd = new SqlCommand(sql2, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@id", subId);
+                        cmd.Parameters.AddWithValue("@dType", "Syllabus");
+                        SqlDataAdapter ad = new SqlDataAdapter(cmd);
+                        ad.Fill(dataTable);
+                        ViewData["Syllabus"] = dataTable;
+                    }
+
                 }
                 return View();
 
