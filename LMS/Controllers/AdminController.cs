@@ -28,7 +28,7 @@ namespace LMS.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Login(FormCollection collection, Models.Login log)
+        public ActionResult Login(FormCollection collection, Login log)
         {
             if (Session["uid"] != null && Session["FName"] != null)
             {
@@ -49,13 +49,13 @@ namespace LMS.Controllers
                         SqlDataReader rd = cmd.ExecuteReader();
                         while (rd.Read())
                         {
-                            if (rd.GetString(2) == log.uname && rd.GetString(3) == log.password)
+                            if (rd.GetString(3) == log.uname && rd.GetString(4) == log.password)
                             {
-                                Session["uid"] = rd.GetString(2);
+                                Session["uid"] = rd.GetString(3);
                                 Session["FName"] = rd.GetString(1);
                                 Session["ID"] = rd.GetInt32(0);
-                                Session["EID"] = rd.GetInt32(4);
-                                Session["FID"] = rd.GetString(8);
+                                Session["EID"] = rd.GetInt32(5);
+                                Session["FID"] = rd.GetString(9);
                                 n++;
                             }
                         }
@@ -162,7 +162,7 @@ namespace LMS.Controllers
                     string path = Path.Combine("D:/LMS", model.upload_type, dtt + "_" + model.title.Replace(' ', '_').Trim() + ext);
 
                     int parentI = 0;
-
+                        
                     using (SqlConnection conn = new SqlConnection(DataBase))
                     {
                         string sql2;
@@ -173,11 +173,10 @@ namespace LMS.Controllers
                             String time = model.lastTimeOnly;
                             String val = date + " " + time;
                             DateTime res = Convert.ToDateTime(val, cultures);
-                            sql2 = "INSERT INTO Docs_Diploma_CS ([Title], [Type], [Path], [SubjectID], [uploadedOn], [uploadedBy] [lastDate]) " +
-                            "VALUES (@title, @type, @path, @id, CURRENT_TIMESTAMP, '" + Session["FName"] + "'" + res.ToString("MMMM dd yyyy h:mm tt") + ")";
+                            sql2 = "INSERT INTO Docs_Diploma_CS ([Title], [Type], [Path], [SubjectID], [uploadedOn], [uploadedBy], [lastDate]) " +
+                            "VALUES (@title, @type, @path, @id, CURRENT_TIMESTAMP, '" + Session["FName"] + "', '" + res.ToString("MMMM dd yyyy h:mm tt") + "')";
                         }
                         else 
-                        //if (model.upload_type == "Notes" || model.upload_type == "Syllabus")
                         {
                             sql2 = "INSERT INTO Docs_Diploma_CS ([Title], [Type], [Path], [SubjectID], [uploadedOn], [uploadedBy]) " +
                             "VALUES (@title, @type, @path, @id, CURRENT_TIMESTAMP, '" + Session["FName"] + "')";
@@ -218,7 +217,7 @@ namespace LMS.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.UploadSatatus = "error";
+                    ViewBag.UploadSatatus = "error"+ ex.Message;
                 }
             }
             else

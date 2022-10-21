@@ -3,6 +3,8 @@ using System.Web.Mvc;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
+using System.Reflection;
+using System.IO;
 
 namespace LMS.Controllers
 {
@@ -171,6 +173,8 @@ namespace LMS.Controllers
             {
                 List<string> facultyDetials = new List<string>();
                 DataTable dataTable = new DataTable();
+                DataTable dataTable1 = new DataTable();
+                DataTable dataTable2 = new DataTable();
                 using(SqlConnection conn = new SqlConnection(DataBase))
                 {
                     conn.Open();
@@ -214,16 +218,16 @@ namespace LMS.Controllers
                         cmd.Parameters.AddWithValue("@id", subId);
                         cmd.Parameters.AddWithValue("@dType", "Notes");
                         SqlDataAdapter ad = new SqlDataAdapter(cmd);
-                        ad.Fill(dataTable);
-                        ViewData["Notes"] = dataTable;
+                        ad.Fill(dataTable1);
+                        ViewData["Notes"] = dataTable1;
                     }
                     using (SqlCommand cmd = new SqlCommand(sql2, conn))
                     {
                         cmd.Parameters.AddWithValue("@id", subId);
                         cmd.Parameters.AddWithValue("@dType", "Syllabus");
                         SqlDataAdapter ad = new SqlDataAdapter(cmd);
-                        ad.Fill(dataTable);
-                        ViewData["Syllabus"] = dataTable;
+                        ad.Fill(dataTable2);
+                        ViewData["Syllabus"] = dataTable2;
                     }
 
                 }
@@ -234,6 +238,15 @@ namespace LMS.Controllers
             {
                 return RedirectToAction("Login");
             }
+        }
+
+        public ActionResult Download(string path)
+        {
+            string fileName = Path.GetFileName(path);
+            Response.AppendHeader("Content-Disposition", "attachment; filename=" + (fileName));
+            Response.WriteFile(path);
+            Response.End();
+            return RedirectToAction("Index");
         }
     }
 

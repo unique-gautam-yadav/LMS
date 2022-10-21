@@ -2407,6 +2407,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="files\Assignment\" />
+    <Folder Include="files\Notes\" />
+    <Folder Include="files\Syllabus\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
