@@ -248,6 +248,13 @@ namespace LMS.Controllers
             Response.End();
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public ActionResult SubmitFile()
+        {
+
+            return RedirectToAction("Index");
+        }
     }
 
 }
