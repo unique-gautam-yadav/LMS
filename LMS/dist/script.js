@@ -5,8 +5,6 @@ function readURL(input) {
 
     reader.onload = function(e) {
       $('.image-upload-wrap').hide();
-
-      $('.file-upload-image').attr('src', e.target.result);
       $('.file-upload-content').show();
 
       $('.image-title').html(input.files[0].name);
