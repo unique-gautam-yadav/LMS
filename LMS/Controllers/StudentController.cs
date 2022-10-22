@@ -5,6 +5,8 @@ using System.Data;
 using System.Configuration;
 using System.Reflection;
 using System.IO;
+using LMS.Models;
+using System;
 
 namespace LMS.Controllers
 {
@@ -96,7 +98,7 @@ namespace LMS.Controllers
                 {
                     conn.Open();
                     string sql1 = "SELECT * FROM Students WHERE uname = @uname and password = @password";
-                    string sql2 = "UPDATE Students SET lastlogin = CURRENT_TIMESTAMP WHERE ID = @ID";
+                    string sql2 = "UPDATE Students SET lastlogin = CURRENT_TIMESTAMP WHERE studentID = @ID";
                     int n = 0;
                     using (SqlCommand cmd = new SqlCommand(sql1, conn))
                     {
@@ -250,10 +252,24 @@ namespace LMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult SubmitFile()
+        public ActionResult SubmitAssignment(Asignment model)
         {
+            if (model.assgnmentFile != null && model.assgnmentFile.ContentLength > 0)
+            {
+                try
+                {
+                    string ext = Path.GetExtension(model.assgnmentFile.FileName);
+                    DateTime cur = DateTime.Now;
+                    string dtt = cur.Year.ToString() + cur.Month.ToString() + cur.Day.ToString() + cur.Hour.ToString() + cur.Minute.ToString() + cur.Second.ToString();
+                    string path = Path.Combine("D:/LMS/Student/Assignment", dtt + ext);
 
-            return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    //
+                }
+            }
+            return View();
         }
     }
 

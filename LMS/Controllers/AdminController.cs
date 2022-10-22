@@ -40,7 +40,7 @@ namespace LMS.Controllers
                 {
                     conn.Open();
                     string sql1 = "SELECT * FROM Faculty WHERE UID = @uid and Password = @password";
-                    string sql2 = "UPDATE Faculty SET lastlogin = CURRENT_TIMESTAMP WHERE ID = @ID";
+                    string sql2 = "UPDATE Faculty SET lastlogin = CURRENT_TIMESTAMP WHERE facultyID = @ID";
                     int n = 0;
                     using (SqlCommand cmd = new SqlCommand(sql1, conn))
                     {
