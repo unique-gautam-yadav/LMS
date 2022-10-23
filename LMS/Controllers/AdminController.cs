@@ -173,13 +173,13 @@ namespace LMS.Controllers
                             String time = model.lastTimeOnly;
                             String val = date + " " + time;
                             DateTime res = Convert.ToDateTime(val, cultures);
-                            sql2 = "INSERT INTO Docs_Diploma_CS ([Title], [Type], [Path], [SubjectID], [uploadedOn], [uploadedBy], [lastDate]) " +
-                            "VALUES (@title, @type, @path, @id, CURRENT_TIMESTAMP, '" + Session["FName"] + "', '" + res.ToString("MMMM dd yyyy h:mm tt") + "')";
+                            sql2 = "INSERT INTO Docs_Diploma_CS ([Title], [Type], [Path], [SubjectID], [uploadedOn], [facultyID], [lastDate]) " +
+                            "VALUES (@title, @type, @path, @id, CURRENT_TIMESTAMP, @facultyID, '" + res.ToString("MMMM dd yyyy h:mm tt") + "')";
                         }
                         else 
                         {
                             sql2 = "INSERT INTO Docs_Diploma_CS ([Title], [Type], [Path], [SubjectID], [uploadedOn], [uploadedBy]) " +
-                            "VALUES (@title, @type, @path, @id, CURRENT_TIMESTAMP, '" + Session["FName"] + "')";
+                            "VALUES (@title, @type, @path, @id, CURRENT_TIMESTAMP, @facultyID)";
                         }
                         
                         Console.WriteLine("Converted DateTime value...");
@@ -203,6 +203,7 @@ namespace LMS.Controllers
                                 cmd.Parameters.AddWithValue("@type", model.upload_type);
                                 cmd.Parameters.AddWithValue("@path", path);
                                 cmd.Parameters.AddWithValue("@id", parentI);
+                                cmd.Parameters.AddWithValue("@facultyID", Convert.ToInt32(Session["ID"]));
 
                                 cmd.ExecuteNonQuery();
                             }

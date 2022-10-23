@@ -177,7 +177,7 @@ namespace LMS.Controllers
                 DataTable dataTable = new DataTable();
                 DataTable dataTable1 = new DataTable();
                 DataTable dataTable2 = new DataTable();
-                using(SqlConnection conn = new SqlConnection(DataBase))
+                using (SqlConnection conn = new SqlConnection(DataBase))
                 {
                     conn.Open();
                     string sql1 = "select * from Faculty where Subjects like @sub";
@@ -262,6 +262,15 @@ namespace LMS.Controllers
                     DateTime cur = DateTime.Now;
                     string dtt = cur.Year.ToString() + cur.Month.ToString() + cur.Day.ToString() + cur.Hour.ToString() + cur.Minute.ToString() + cur.Second.ToString();
                     string path = Path.Combine("D:/LMS/Student/Assignment", dtt + ext);
+                    string sql = "INSERT INTO Assignments ([documentID], [path], [submit Date], [studentID], [facultyID]) " +
+                    "VALUES (@docID, @path, CURRENT_TIMESTAMP, @studentID, @facultyID)";
+
+                    using (SqlConnection conn = new SqlConnection(DataBase))
+                    {
+                        conn.Open();
+                        /*using */
+                    }
+
 
                 }
                 catch (Exception ex)
