@@ -39,7 +39,7 @@ namespace LMS.Controllers
                 using (SqlConnection conn = new SqlConnection(DataBase))
                 {
                     conn.Open();
-                    string sql1 = "SELECT * FROM Faculty WHERE UID = @uid and Password = @password";
+                    string sql1 = "SELECT * FROM Faculty WHERE UID = @uid AND Password = @password";
                     string sql2 = "UPDATE Faculty SET lastlogin = CURRENT_TIMESTAMP WHERE facultyID = @ID";
                     int n = 0;
                     using (SqlCommand cmd = new SqlCommand(sql1, conn))
@@ -178,7 +178,7 @@ namespace LMS.Controllers
                         }
                         else 
                         {
-                            sql2 = "INSERT INTO Docs_Diploma_CS ([Title], [Type], [Path], [SubjectID], [uploadedOn], [uploadedBy]) " +
+                            sql2 = "INSERT INTO Docs_Diploma_CS ([Title], [Type], [Path], [SubjectID], [uploadedOn], [facultyID]) " +
                             "VALUES (@title, @type, @path, @id, CURRENT_TIMESTAMP, @facultyID)";
                         }
                         

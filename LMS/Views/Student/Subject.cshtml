@@ -124,7 +124,6 @@
                                             <th style="width: 10px">#</th>
                                             <th>Title</th>
                                             <th>Uploaded on</th>
-                                            <th>Uploaded by</th>
                                             <th style="width: 40px">Actions</th>
                                         </tr>
                                     </thead>
@@ -138,11 +137,6 @@
                                                 <td>
                                                     <div class="text-body">
                                                         @syllabus.Rows[i][5]
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="text-body">
-                                                        @syllabus.Rows[i][6]
                                                     </div>
                                                 </td>
                                                 <td>
@@ -291,7 +285,7 @@
     }
 
     function fileChange() {
-        file = document.getElementsByName('filee')[0].files[0]['name']
+        file = document.getElementsByName('assgnmentFile')[0].files[0]['name']
         document.getElementById('fileLabel').innerHTML = file
     }
 
