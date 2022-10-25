@@ -14,7 +14,7 @@ namespace LMS.Controllers
         string DataBase = ConfigurationManager.ConnectionStrings["DataBase"].ConnectionString.ToString();
         // GET: Admin
         [HttpGet]
-        public ActionResult Login(bool loginstatus = true)
+        public ActionResult Login()
         {
             Response.Cache.SetNoStore();
             if (Session["uid"] != null && Session["FName"] != null)
@@ -24,7 +24,7 @@ namespace LMS.Controllers
             else
             {
                 Response.Cache.SetNoStore();
-                return View(loginstatus);
+                return View();
             }
         }
         [HttpPost]
@@ -53,7 +53,7 @@ namespace LMS.Controllers
                             {
                                 Session["uid"] = rd.GetString(3);
                                 Session["FName"] = rd.GetString(1);
-                                Session["ID"] = rd.GetInt32(0);
+                                Session["tableID"] = rd.GetInt32(0);
                                 Session["EID"] = rd.GetInt32(5);
                                 Session["FID"] = rd.GetString(9);
                                 n++;
@@ -66,7 +66,7 @@ namespace LMS.Controllers
                     {
                         using (SqlCommand cmd = new SqlCommand(sql2, conn))
                         {
-                            cmd.Parameters.AddWithValue("@ID", Session["ID"]);
+                            cmd.Parameters.AddWithValue("@ID", Convert.ToInt32(Session["tableID"]));
                             cmd.ExecuteNonQuery();
                         }
                         Response.Write(log.remember);
@@ -76,10 +76,12 @@ namespace LMS.Controllers
                     else
                     {
                         Session["uid"] = null;
-                        Session["ID"] = null;
+                        Session["tableID"] = null;
                         Session["FName"] = null;
                         Session["EID"] = null;
-                        return RedirectToAction("Login", new { @loginstatus = false });
+                        ViewBag.Status = "failed";
+                        return View();
+                        /*return RedirectToAction("Login", new { @loginstatus = false });*/
                     }
                 }
 
@@ -104,7 +106,7 @@ namespace LMS.Controllers
         public ActionResult Logout()
         {
             Session["uid"] = null;
-            Session["ID"] = null;
+            Session["tableID"] = null;
             Session["FName"] = null;
             Session["EID"] = null;
             return RedirectToAction("Login");

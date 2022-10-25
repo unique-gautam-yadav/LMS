@@ -254,7 +254,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            @using (Html.BeginForm("SubmitAssignment", "Student", FormMethod.Post))
+            @using (Html.BeginForm("Subject", "Student", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <div class="modal-body">
                     <div class="input-group mb-3">

@@ -1,6 +1,8 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<link rel="stylesheet" href="~/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css" />
+
 
 <div class="jumbotron">
     <div class="carousel-inner">
@@ -39,3 +41,43 @@
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
     </div>
 </div>
+
+<script src="~/plugins/sweetalert2/sweetalert2.min.js"></script>
+
+<script>
+    if (@ViewBag.assignmentStatus == "0xSSCCFF") {
+        $(function () {
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4000
+            });
+
+            $(function () {
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Yaah!! Assignment uploaded successfully.'
+                })
+            });
+        });
+    } else if (@ViewBag.assignmentStatus == "0xEECCFF") {
+        $(function () {
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4000
+            });
+
+            $(function () {
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Yaah!! Assignment uploaded successfully.'
+                })
+            });
+        });
+    }
+</script>
+
+

@@ -13,10 +13,8 @@ namespace LMS.Controllers
     public class StudentController : Controller
     {
         string DataBase = ConfigurationManager.ConnectionStrings["DataBase"].ConnectionString;
-        public ActionResult Index()
+        public ActionResult Index(string ssttc = "no")
         {
-            DataTable dataTable = new DataTable();
-            DataTable dataTable1 = new DataTable();
             Response.Cache.SetNoStore();
             if (Session["uname"] == null)
             {
@@ -24,54 +22,12 @@ namespace LMS.Controllers
             }
             else
             {
-                using (SqlConnection conn = new SqlConnection(DataBase))
-                {
-                    conn.Open();
-                    string sql = "select * from " + Session["Course"] + "_" + Session["Branch"] + " where ParentID = 0";
-                    using (SqlDataAdapter ad = new SqlDataAdapter(sql, conn))
-                    {
-                        ad.Fill(dataTable);
-                    }
-                    string sql1 = "select * from " + Session["Course"] + "_" + Session["Branch"];
-                    using (SqlDataAdapter ad = new SqlDataAdapter(sql1, conn))
-                    {
-                        ad.Fill(dataTable1);
-                    }
-                }
-                Session.Add("sliderItems", dataTable);
-                Session.Add("sliderItems1", dataTable1);
+                ViewData["assignmentStatus"] = ssttc;
                 return View();
             }
         }
 
-        public ActionResult About()
-        {
-            if (Session["uname"] == null)
-            {
-                return RedirectToAction("Login", "Student");
-
-            }
-            else
-            {
-                ViewBag.Message = "Your application description page.";
-                return View();
-            }
-        }
-
-        public ActionResult Contact()
-        {
-            if (Session["uname"] == null)
-            {
-                return RedirectToAction("Login", "Student");
-            }
-            else
-            {
-                ViewBag.Message = "Your contact page.";
-                return View();
-
-            }
-        }
-        public ActionResult Login(bool loginstatus = true)
+        public ActionResult Login()
         {
             Response.Cache.SetNoStore();
             if (Session["uname"] != null)
@@ -80,7 +36,7 @@ namespace LMS.Controllers
             }
             else
             {
-                return View(loginstatus);
+                return View();
             }
 
         }
@@ -94,6 +50,8 @@ namespace LMS.Controllers
             }
             else
             {
+                DataTable dataTable = new DataTable();
+                DataTable dataTable1 = new DataTable();
                 using (SqlConnection conn = new SqlConnection(DataBase))
                 {
                     conn.Open();
@@ -128,7 +86,21 @@ namespace LMS.Controllers
                             cmd.Parameters.AddWithValue("@ID", Session["ID"]);
                             cmd.ExecuteNonQuery();
                         }
-                        Response.Write(log.remember);
+
+                        string sql3 = "select * from " + Session["Course"] + "_" + Session["Branch"] + " where ParentID = 0";
+                        using (SqlDataAdapter ad = new SqlDataAdapter(sql3, conn))
+                        {
+                            ad.Fill(dataTable);
+                        }
+                        string sql4 = "select * from " + Session["Course"] + "_" + Session["Branch"];
+                        using (SqlDataAdapter ad = new SqlDataAdapter(sql4, conn))
+                        {
+                            ad.Fill(dataTable1);
+                        }
+
+                        Session.Add("sliderItems", dataTable);
+                        Session.Add("sliderItems1", dataTable1);
+
                         return RedirectToAction("Index", "Student");
 
                     }
@@ -137,7 +109,8 @@ namespace LMS.Controllers
                         Session["uname"] = null;
                         Session["uid"] = null;
                         Session["Name"] = null;
-                        return RedirectToAction("Login", "Student", new { @loginstatus = false });
+                        ViewBag.Status = "failed";
+                        return View();
                     }
                 }
 
@@ -252,8 +225,9 @@ namespace LMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult SubmitAssignment(Asignment model)
+        public ActionResult Subject(Asignment model)
         {
+            string msg = "Hello World!!";
             if (model.assgnmentFile != null && model.assgnmentFile.ContentLength > 0)
             {
                 try
@@ -262,23 +236,35 @@ namespace LMS.Controllers
                     DateTime cur = DateTime.Now;
                     string dtt = cur.Year.ToString() + cur.Month.ToString() + cur.Day.ToString() + cur.Hour.ToString() + cur.Minute.ToString() + cur.Second.ToString();
                     string path = Path.Combine("D:/LMS/Student/Assignment", dtt + ext);
-                    string sql = "INSERT INTO Assignments ([documentID], [path], [submit Date], [studentID], [facultyID]) " +
-                    "VALUES (@docID, @path, CURRENT_TIMESTAMP, @studentID, @facultyID)";
+
 
                     using (SqlConnection conn = new SqlConnection(DataBase))
                     {
                         conn.Open();
-                        /*using */
+                        string sql1 = "INSERT INTO Assignments ([documentID], [path], [submit Date], [studentID]) " +
+                                       "VALUES (@docID, @path, CURRENT_TIMESTAMP, @studentID)";
+                        using (SqlCommand cmd = new SqlCommand(sql1, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@docID", model.docsID);
+                            cmd.Parameters.AddWithValue("@path", path);
+                            cmd.Parameters.AddWithValue("@studentID", Convert.ToInt32(Session["ID"]));
+
+                            cmd.ExecuteNonQuery();
+                        }
+                        model.assgnmentFile.SaveAs(path);
+                        msg = "0xSSCCFF";
                     }
-
-
                 }
-                catch (Exception ex)
+                catch /*(Exception ex)*/
                 {
-                    //
+                    msg = "0xEECCFF";
                 }
             }
-            return View();
+            else
+            {
+                msg = "0xNFCCFF";
+            }
+            return RedirectToAction("Index", new { ssttc = msg });
         }
     }
 
