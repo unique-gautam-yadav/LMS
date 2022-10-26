@@ -7,13 +7,14 @@ using System.Reflection;
 using System.IO;
 using LMS.Models;
 using System;
+using Microsoft.SqlServer.Server;
 
 namespace LMS.Controllers
 {
     public class StudentController : Controller
     {
         string DataBase = ConfigurationManager.ConnectionStrings["DataBase"].ConnectionString;
-        public ActionResult Index(string ssttc = "no")
+        public ActionResult Index()
         {
             Response.Cache.SetNoStore();
             if (Session["uname"] == null)
@@ -22,7 +23,7 @@ namespace LMS.Controllers
             }
             else
             {
-                ViewData["assignmentStatus"] = ssttc;
+                ViewData["assignmentStatus"] = TempData["aStatus"];
                 return View();
             }
         }
@@ -141,8 +142,16 @@ namespace LMS.Controllers
                 return View();
             }
         }
+        public ActionResult Download(string path)
+        {
+            string fileName = Path.GetFileName(path);
+            Response.AppendHeader("Content-Disposition", "attachment; filename=" + (fileName));
+            Response.WriteFile(path);
+            Response.End();
+            return RedirectToAction("Index");
+        }
 
-        public ActionResult Subject(int subId, string subName)
+        public ActionResult Subject(int subId = 0, string subName = "none")
         {
             if (Session["uname"] != null)
             {
@@ -204,8 +213,25 @@ namespace LMS.Controllers
                         ad.Fill(dataTable2);
                         ViewData["Syllabus"] = dataTable2;
                     }
-
+                    if (dataTable.Rows.Count > 0)
+                    {
+                        List<int> uploadedAssignent = new List<int>();
+                        string sql3 = "SELECT documentID FROM Assignments WHERE studentID = @sID";
+                        using (SqlCommand cmd = new SqlCommand(sql3, conn))
+                        {
+                            uploadedAssignent.Add(0);
+                            cmd.Parameters.AddWithValue("@sID", Convert.ToInt32(Session["ID"]));
+                            SqlDataReader rd = cmd.ExecuteReader();
+                            while (rd.Read())
+                            {
+                                uploadedAssignent.Add(rd.GetInt32(0));
+                            }
+                            rd.Close();
+                        }
+                        ViewData["uploadedAssignments"] = uploadedAssignent;
+                    }
                 }
+                ViewBag.Name = subName;
                 return View();
 
             }
@@ -215,14 +241,6 @@ namespace LMS.Controllers
             }
         }
 
-        public ActionResult Download(string path)
-        {
-            string fileName = Path.GetFileName(path);
-            Response.AppendHeader("Content-Disposition", "attachment; filename=" + (fileName));
-            Response.WriteFile(path);
-            Response.End();
-            return RedirectToAction("Index");
-        }
 
         [HttpPost]
         public ActionResult Subject(Asignment model)
@@ -255,16 +273,18 @@ namespace LMS.Controllers
                         msg = "0xSSCCFF";
                     }
                 }
-                catch /*(Exception ex)*/
+                catch (Exception ex)
                 {
                     msg = "0xEECCFF";
+                    msg = ex.Message;
                 }
             }
             else
             {
                 msg = "0xNFCCFF";
             }
-            return RedirectToAction("Index", new { ssttc = msg });
+            TempData["aStatus"] = msg;
+            return RedirectToAction("Index");
         }
     }
 

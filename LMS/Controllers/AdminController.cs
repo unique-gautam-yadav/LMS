@@ -229,5 +229,10 @@ namespace LMS.Controllers
             }
             return View();
         }
+
+        public ActionResult Assignments()
+        {
+            return View();
+        }
     }
 }

@@ -1,8 +1,9 @@
 ﻿@using System.Data;
 @{
-    ViewBag.Title = "Subject";
+    ViewBag.Title = ViewBag.Name;
 
     IList<string> fac = ViewData["Faculty"] as IList<string>;
+    List<int> upA = (List<int>)ViewData["uploadedAssignments"];
 
     bool hasFaculty = ViewBag.FacD.Contains("no");
 
@@ -15,7 +16,18 @@
     bool hasSyllabus = syllabus.Rows.Count > 0;
 }
 
-<h2>Subject</h2>
+<link rel="stylesheet" href="~/assets/css/themify-icons.css">
+
+<style>
+    .status-p {
+        border-radius: 20px;
+        width: 90px;
+        text-align: center;
+        padding-bottom: 1.5px;
+    }
+</style>
+
+<h2>@ViewBag.Name</h2>
 
 <div class="row">
     <div class="col-md-3">
@@ -74,7 +86,7 @@
                     <div class="active tab-pane" id="notes">
                         @if (hasNotes)
                         {
-                            <div class="card-body">
+                            <div style="overflow: auto;" class="card-body">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
@@ -97,8 +109,8 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a onclick="loadDoc('@notes.Rows[i][3]')" data-toggle="modal" data-target="#modal-xl" href="#"><i class="fas fa-eye mr-1"></i></a>
-                                                    <a href="@Url.Action("Download", "Student", new { filename = notes.Rows[i][1], path = notes.Rows[i][3]})"><i class="fas fa-download mr-1"></i></a>
+                                                    @*<a onclick="loadDoc('@notes.Rows[i][3]')" data-toggle="modal" data-target="#modal-xl" href="#"><i class="fas fa-eye mr-1"></i></a>*@
+                                                    <a href="@Url.Action("Download", "Student", new { filename = notes.Rows[i][1], path = notes.Rows[i][3]})"><span class="ti-save"></span></a>
                                                 </td>
                                             </tr>
                                         }
@@ -117,7 +129,7 @@
                     <div class="tab-pane" id="syllabus">
                         @if (hasSyllabus)
                         {
-                            <div class="card-body">
+                            <div style="overflow: auto;" class="card-body">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
@@ -140,8 +152,8 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a onclick="loadDoc('@syllabus.Rows[i][3]')" data-toggle="modal" data-target="#modal-xl" href="#"><i class="fas fa-eye mr-1"></i></a>
-                                                    <a href="@Url.Action("Download", "Student", new { filename = syllabus.Rows[i][1], path = syllabus.Rows[i][3]})"><i class="fas fa-download mr-1"></i></a>
+                                                    <!--<a onclick="loadDoc('@syllabus.Rows[i][3]')" data-toggle="modal" data-target="#modal-xl" href="#">-->@*<i class="fas fa-eye mr-1"></i>*@ <!--<span class="ti-download"></span> </a>-->
+                                                    <a href="@Url.Action("Download", "Student", new { filename = syllabus.Rows[i][1], path = syllabus.Rows[i][3]})"><span class="ti-save"></span></a>
                                                 </td>
                                             </tr>
                                         }
@@ -160,45 +172,85 @@
                     <div class="tab-pane" id="assignment">
                         @if (hasAssignment)
                         {
-                            <div class="card-body">
+                            <div style="overflow: auto;" class="card-body">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th style="width: 10px">#</th>
                                             <th>Title</th>
-                                            <th>Uploaded on</th>
-                                            <th>Last Date</th>
-                                            @*<th>Upload</th>*@
+                                            <th id="dsd">Last Date</th>
                                             <th style="width: 100px">Actions</th>
+                                            <th style="width : 100px;">Status</th>
+                                            <th>M.O</th>
+                                            <th>Remarks</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @for (int i = 0; i < assignments.Rows.Count; i++)
                                         {
+                                            int id = Convert.ToInt32(assignments.Rows[i][0]);
                                             int temp = i + 1;
+                                            DateTime lastDate = Convert.ToDateTime(assignments.Rows[i][7]);
+                                            int state = 0;
+                                            if (upA.Contains(id))
+                                            {
+                                                state = 2;
+                                            }
+                                            else if (lastDate <= DateTime.Now)
+                                            {
+                                                state = 1;
+                                            }
                                             <tr>
                                                 <td>@temp.</td>
                                                 <td>@assignments.Rows[i][1]</td>
                                                 <td>
-                                                    <div>
-                                                        @assignments.Rows[i][5]
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        @assignments.Rows[i][7]
-                                                    </div>
+                                                    @if (state == 0)
+                                                    {
+                                                        <p class="text-orange m-0">@assignments.Rows[i][7]</p>
+                                                    }
+                                                    else if (state == 1)
+                                                    {
+                                                        <p class="text-red m-0">@assignments.Rows[i][7]</p>
+                                                    }
+                                                    else if (state == 2)
+                                                    {
+                                                        <p class="text-success m-0">@assignments.Rows[i][7]</p>
+                                                    }
                                                 </td>
                                                 @*    <td>
                                                         <input type="file" />
                                                     </td>*@
-                                                <td>
+                                                <td class="text-center">
                                                     @{
                                                         string tt = "'" + assignments.Rows[i][3] + "'";
                                                     }
-                                                    <a onclick="loadDoc('@tt')" data-toggle="modal" data-target="#modal-xl" href="#"><i class="fas fa-eye mr-1"></i></a>
-                                                    <a href="@Url.Action("Download", "Student", new { filename = assignments.Rows[i][1], path = assignments.Rows[i][3]})"><i class="fas fa-download mr-1"></i></a>
-                                                    <a data-toggle="modal" onclick="setAID(@assignments.Rows[i][0])" data-target="#modal-xl2" href="#"><i class="fas fa-upload mr-1"></i></a>
+                                                    @*<a onclick="loadDoc('@tt')" data-toggle="modal" data-target="#modal-xl" href="#"><span class="ti-eye mr-2"></span></a>*@
+                                                    <a href="@Url.Action("Download", "Student", new { filename = assignments.Rows[i][1], path = assignments.Rows[i][3]})"><span class="ti-save"></span></a>
+                                                    @if (state == 0)
+                                                    {
+
+                                                        <a data-toggle="modal" onclick="setAID(@assignments.Rows[i][0])" data-target="#modal-xl2" href="#"><span class="ti-export ml-2"></span></a>
+                                                    }
+                                                </td>
+                                                <td class="text-center center-block">
+                                                    @if (state == 0)
+                                                    {
+                                                        <p style="color : #fff" class="status-p bg-gradient-orange m-0">Pending <!--&nbsp;--> @*<i class="ti-info-alt mr-1"></i>*@ </p>
+                                                    }
+                                                    else if (state == 1)
+                                                    {
+                                                        <p class="status-p bg-gradient-red m-0">Expired <!--&nbsp;--> @*<i class="ti-na mr-1"></i>*@</p>
+                                                    }
+                                                    else if (state == 2)
+                                                    {
+                                                        <p class="status-p bg-gradient-primary m-0">Submitted <!--&nbsp;--> @*<i class="ti-check-box mr-1"></i>*@</p>
+                                                    }
+                                                </td>
+                                                <td class="text-center">
+                                                    ---
+                                                </td>
+                                                <td class="text-center">
+                                                    ---
                                                 </td>
                                             </tr>
                                         }

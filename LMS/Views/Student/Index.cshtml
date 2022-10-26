@@ -3,6 +3,90 @@
 }
 <link rel="stylesheet" href="~/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css" />
 
+<div class="row">
+    <div class="col-md-3 col-sm-6 col-12">
+        <div class="info-box bg-info">
+            <span class="info-box-icon"><i class="far fa-bookmark"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Bookmarks</span>
+                <span class="info-box-number">41,410</span>
+
+                <div class="progress">
+                    <div class="progress-bar" style="width: 70%"></div>
+                </div>
+                <span class="progress-description">
+                    70% Increase in 30 Days
+                </span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-3 col-sm-6 col-12">
+        <div class="info-box bg-success">
+            <span class="info-box-icon"><i class="far fa-thumbs-up"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Likes</span>
+                <span class="info-box-number">41,410</span>
+
+                <div class="progress">
+                    <div class="progress-bar" style="width: 70%"></div>
+                </div>
+                <span class="progress-description">
+                    70% Increase in 30 Days
+                </span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-3 col-sm-6 col-12">
+        <div class="info-box bg-warning">
+            <span class="info-box-icon"><i class="far fa-calendar-alt"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Events</span>
+                <span class="info-box-number">41,410</span>
+
+                <div class="progress">
+                    <div class="progress-bar" style="width: 70%"></div>
+                </div>
+                <span class="progress-description">
+                    70% Increase in 30 Days
+                </span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-3 col-sm-6 col-12">
+        <div class="info-box bg-danger">
+            <span class="info-box-icon"><i class="fas fa-comments"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Comments</span>
+                <span class="info-box-number">41,410</span>
+
+                <div class="progress">
+                    <div class="progress-bar" style="width: 70%"></div>
+                </div>
+                <span class="progress-description">
+                    70% Increase in 30 Days
+                </span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+</div>
+<!-- /.row -->
+<!-- =========================================================== -->
 
 <div class="jumbotron">
     <div class="carousel-inner">
@@ -17,7 +101,7 @@
                 </p>
             </div>
         </div>
-</div>
+    </div>
 </div>
 
 <div class="row">
@@ -42,41 +126,35 @@
     </div>
 </div>
 
+<p>@ViewBag.assignmentStatus</p>
+
 <script src="~/plugins/sweetalert2/sweetalert2.min.js"></script>
 
 <script>
-    if (@ViewBag.assignmentStatus == "0xSSCCFF") {
-        $(function () {
-            var Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 4000
-            });
 
-            $(function () {
-                Toast.fire({
-                    icon: 'success',
-                    title: 'Yaah!! Assignment uploaded successfully.'
-                })
-            });
-        });
-    } else if (@ViewBag.assignmentStatus == "0xEECCFF") {
-        $(function () {
-            var Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 4000
-            });
+    var Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 4000
+    });
 
-            $(function () {
-                Toast.fire({
-                    icon: 'success',
-                    title: 'Yaah!! Assignment uploaded successfully.'
-                })
-            });
-        });
+
+    if ("@ViewBag.assignmentStatus" == "0xSSCCFF") {
+        Toast.fire({
+            icon: 'success',
+            title: 'Yaah!! <br> Assignment uploaded successfully.'
+        })
+    } else if ("@ViewBag.assignmentStatus" == "0xEECCFF") {
+        Toast.fire({
+            icon: 'error',
+            title: 'Oops!! <br> Something went wrong.'
+        })
+    } else if ("@ViewBag.assignmentStatus" == "0xNFCCFF") {
+        Toast.fire({
+            icon: 'error',
+            title: 'Error :   Please Specify a valid file, <br> while uploading assignment'
+        })
     }
 </script>
 
