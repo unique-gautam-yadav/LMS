@@ -15,6 +15,12 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="~/dist/css/adminlte.css">
     <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
+
+    <!-- Themify Icons -->
+    <link rel="stylesheet" href="~/assets/css/themify-icons.css">
+
+    @RenderSection("Styles", false)
+
     <style>
         .alert-dangerr {
             color: #721c24;
@@ -121,6 +127,6 @@
             window.location.href = "/Student/Logout"
         }
     </script>
-    @RenderSection("scripts", required: false)
+    @RenderSection("scripts", false)
 </body>
 </html>

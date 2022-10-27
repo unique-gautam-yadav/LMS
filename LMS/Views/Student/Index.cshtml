@@ -1,7 +1,10 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-<link rel="stylesheet" href="~/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css" />
+@section Styles{
+
+    <link rel="stylesheet" href="~/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css" />
+}
 
 <div class="row">
     <div class="col-md-3 col-sm-6 col-12">
@@ -128,9 +131,13 @@
 
 <p>@ViewBag.assignmentStatus</p>
 
-<script src="~/plugins/sweetalert2/sweetalert2.min.js"></script>
 
-<script>
+@section Scripts{
+
+
+    <script src="~/plugins/sweetalert2/sweetalert2.min.js"></script>
+
+    <script>
 
     var Toast = Swal.mixin({
         toast: true,
@@ -156,6 +163,8 @@
             title: 'Error :   Please Specify a valid file, <br> while uploading assignment'
         })
     }
-</script>
+    </script>
 
 
+
+}

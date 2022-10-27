@@ -16,16 +16,17 @@
     bool hasSyllabus = syllabus.Rows.Count > 0;
 }
 
-<link rel="stylesheet" href="~/assets/css/themify-icons.css">
+@section Styles{
 
-<style>
-    .status-p {
-        border-radius: 20px;
-        width: 90px;
-        text-align: center;
-        padding-bottom: 1.5px;
-    }
-</style>
+    <style>
+        .status-p {
+            border-radius: 20px;
+            width: 90px;
+            text-align: center;
+            padding-bottom: 1.5px;
+        }
+    </style>
+}
 
 <h2>@ViewBag.Name</h2>
 
@@ -328,21 +329,25 @@
     <!-- /.modal-dialog -->
 </div>
 
-<script>
-    var selectedID
+@section Scripts{
 
-    function setAID(id) {
-        document.getElementById("aID").value = id
-        selectedID = id;
-    }
+    <script>
+        var selectedID
 
-    function fileChange() {
-        file = document.getElementsByName('assgnmentFile')[0].files[0]['name']
-        document.getElementById('fileLabel').innerHTML = file
-    }
+        function setAID(id) {
+            document.getElementById("aID").value = id
+            selectedID = id;
+        }
 
-    function loadDoc(path) {
-        e = document.getElementById("docsOpener")
-        e.src = path
-    }
-</script>
+        function fileChange() {
+            file = document.getElementsByName('assgnmentFile')[0].files[0]['name']
+            document.getElementById('fileLabel').innerHTML = file
+        }
+
+        function loadDoc(path) {
+            e = document.getElementById("docsOpener")
+            e.src = path
+        }
+    </script>
+
+}

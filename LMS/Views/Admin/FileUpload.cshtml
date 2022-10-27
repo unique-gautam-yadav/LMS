@@ -113,10 +113,10 @@
                         <label id="fileLabel" class="custom-file-label" for="inputGroupFile02">Choose file</label>
                     </div>
                     <!--
-            <div class="input-group-append">
-                <span class="input-group-text">Upload</span>
-            </div>
-                -->
+                    <div class="input-group-append">
+                        <span class="input-group-text">Upload</span>
+                    </div>
+                        -->
                 </div>
                 <div class="form-group">
                     <div class="form-check">
@@ -153,78 +153,82 @@
                 </div>
             }
             @*else
-            {
-                <div class="alert alert-danger mt-3" role="alert">
-                    <strong>Oops!!</strong>
-                    @ViewBag.UploadSatatus
-                </div>
-            }*@
+                {
+                    <div class="alert alert-danger mt-3" role="alert">
+                        <strong>Oops!!</strong>
+                        @ViewBag.UploadSatatus
+                    </div>
+                }*@
         </div>
     </div>
 </div>
 <!-- Server side end -->
 
 
-<script>
+@section Scripts{
 
-    function showLastDate() {
-        document.getElementById("dateTimeInputGroup").style = "display : block;"
-    }
+    <script>
 
-    function removeLastDate() {
-        document.getElementById("dateTimeInputGroup").style = "display : none;"
-    }
-
-    function fileChange() {
-        file = document.getElementsByName('filee')[0].files[0]['name']
-        document.getElementById('fileLabel').innerHTML = file
-    }
-
-
-    function changed(cur, child) {
-
-        var val = document.getElementById(cur).value;
-        var select = document.getElementById(child)
-
-        var chld = select.lastChild;
-
-        while (chld) {
-            select.removeChild(chld)
-            chld = select.lastChild
+        function showLastDate() {
+            document.getElementById("dateTimeInputGroup").style = "display : block;"
         }
 
-        var dOpt = new Option("Select " + child, 'none', true, true)
-        dOpt.setAttribute("hidden", "");
-
-        select.appendChild(dOpt)
-
-        var pID;
-        for (var i = 0; i < allDt.length; i++) {
-            var temp = allDt[i];
-            if (temp['Name'] == val) {
-                pID = temp['ID'];
-            }
+        function removeLastDate() {
+            document.getElementById("dateTimeInputGroup").style = "display : none;"
         }
-        for (var i = 0; i < allDt.length; i++) {
-            var temp = allDt[i];
-            if (temp['ParentID'] == pID) {
-                var microTemp = temp['Name']
-                let opt = new Option(microTemp, microTemp);
-                select.appendChild(opt)
-            }
+
+        function fileChange() {
+            file = document.getElementsByName('filee')[0].files[0]['name']
+            document.getElementById('fileLabel').innerHTML = file
         }
-        if (cur == 'Year') {
-            var gc = document.getElementById('Subject')
-            var chldd = gc.lastChild
-            while (chldd) {
-                gc.removeChild(chldd)
-                chldd = gc.lastChild
+
+
+        function changed(cur, child) {
+
+            var val = document.getElementById(cur).value;
+            var select = document.getElementById(child)
+
+            var chld = select.lastChild;
+
+            while (chld) {
+                select.removeChild(chld)
+                chld = select.lastChild
             }
 
-            var dOptt = new Option("Select Subject", 'none', true, true)
-            dOptt.setAttribute("hidden", "");
+            var dOpt = new Option("Select " + child, 'none', true, true)
+            dOpt.setAttribute("hidden", "");
 
-            gc.appendChild(dOptt)
+            select.appendChild(dOpt)
+
+            var pID;
+            for (var i = 0; i < allDt.length; i++) {
+                var temp = allDt[i];
+                if (temp['Name'] == val) {
+                    pID = temp['ID'];
+                }
+            }
+            for (var i = 0; i < allDt.length; i++) {
+                var temp = allDt[i];
+                if (temp['ParentID'] == pID) {
+                    var microTemp = temp['Name']
+                    let opt = new Option(microTemp, microTemp);
+                    select.appendChild(opt)
+                }
+            }
+            if (cur == 'Year') {
+                var gc = document.getElementById('Subject')
+                var chldd = gc.lastChild
+                while (chldd) {
+                    gc.removeChild(chldd)
+                    chldd = gc.lastChild
+                }
+
+                var dOptt = new Option("Select Subject", 'none', true, true)
+                dOptt.setAttribute("hidden", "");
+
+                gc.appendChild(dOptt)
+            }
         }
-    }
-</script>
+    </script>
+
+}
