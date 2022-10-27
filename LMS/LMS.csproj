@@ -2387,8 +2387,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\Student\_Layout.cshtml" />
-    <Content Include="Views\Student\About.cshtml" />
-    <Content Include="Views\Student\Contact.cshtml" />
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Shared\Student\_Footer.cshtml" />
     <Content Include="Views\Shared\Student\_NavBar.cshtml" />
