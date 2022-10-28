@@ -286,5 +286,32 @@ namespace LMS.Controllers
             ViewData["dataStudents"] = dtStudents;
             return View();
         }
+
+        public ActionResult Evaluate(int assignmentID = 1)
+        {
+            DataTable assignment = new DataTable();
+            DataTable students = new DataTable();
+
+            using (SqlConnection conn = new SqlConnection(DataBase))
+            {
+                conn.Open();
+                string sql1 = "SELECT * FROM Assignments WHERE assignmentID = " + assignmentID;
+                using (SqlDataAdapter ad = new SqlDataAdapter(sql1, conn))
+                {
+                    ad.Fill(assignment);
+                }
+
+                string sql2 = "SELECT * FROM Students WHERE course = 'Diploma' AND Branch = 'CS'";
+                using (SqlDataAdapter ad = new SqlDataAdapter(sql2, conn))
+                {
+                    ad.Fill(students);
+                }
+
+            }
+
+            ViewData["assignment"] = assignment;
+            ViewData["students"] = students;
+            return View();
+        }
     }
 }

@@ -1,0 +1,89 @@
+﻿@using System.Data
+
+@{
+    Layout = null;
+    DataTable assignemnt = (DataTable)ViewData["assignment"];
+    DataTable students = (DataTable)ViewData["students"];
+
+    string exp = "studentID = " + assignemnt.Rows[0][4];
+    DataRow[] temp = students.Select(exp);
+    int i_ = students.Rows.IndexOf(temp[0]);
+
+    string imgUrl = "https://glauniversity.in:8103/" + students.Rows[i_][1] + ".jpg";
+}
+
+<style>
+    .profile {
+        height: 35px;
+        width: 35px;
+        border-radius: 50%;
+        margin-right: 12px;
+    }
+</style>
+<div class="col-12">
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="header-title">Student</h4>
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <strong>Student's Name</strong> <br />
+                    @students.Rows[i_][3] <br />
+                </div>
+                <div class="col-md-4">
+                    <strong>University Roll no</strong> <br />
+                    @students.Rows[i_][1] <br />
+                </div>
+                <div class="col-md-4">
+                    <strong>ProfilePicture</strong><br />
+                    <img class="profile" src="@imgUrl" alt="@students.Rows[i_][3]" /><br />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr style="width : 20%; margin: auto;" />
+@using (Html.BeginForm())
+{
+    <div class="card">
+        <div class="card-body">
+            <h4 class="header-title">Evaluate</h4>
+            <div class="form-row">
+                <div class="col-md-5 mb-3">
+                    <label for="validationCustom01">Marks Obtains</label>
+                    <input type="text" class="form-control" id="validationCustom01" placeholder="Given Marks" required="">
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="col-md-1 px-2">
+                    <label for="validationCustom01"></label>
+                    <input type="text" readonly class="form-control mt-2 text-center" value="/" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="validationCustom02">Maximum Marks</label>
+                    <input type="text" class="form-control" id="validationCustom02" placeholder="Max" required="">
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-12 mb-3">
+                    <label for="validationCustom03">Remarks</label>
+                    <textarea maxlength="150" class="form-control" id="validationCustom03" placeholder="Remark" required=""></textarea>
+                    <div class="invalid-feedback">
+                        Please provide a valid Remark.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Server side end -->
+
+    <div class="modal-footer">
+        <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+}
+

@@ -25,7 +25,8 @@
                     if (i == 1)
                     {
                         classes2 += " show";
-                    }else
+                    }
+                    else
                     {
                         classes += " collapsed";
                     }
@@ -40,15 +41,15 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <a class="@classes" data-toggle="collapse" href="#@id">
+                            <a class="@classes right" data-toggle="collapse" href="#@id">
                                 @dt.Rows[i][1] (@sub.Rows[_i][1])
                             </a>
                         </div>
                         <div id="@id" class="@classes2" data-parent="#accordion00">
                             <div id="dataTablee" class="card-body">
                                 <div class="alert alert-primary">
-                                    <a class="alert-link" href="@Url.Action("Download", "Student", new { filename = "GautamYadav", path = dt.Rows[i][3]})"><u>This</u></a>
-                                    assignment was uploaded by <strong>@fac.Rows[_i2][1]</strong> on <strong>@dt.Rows[i][5].</strong>
+                                    <a class="alert-link" href="@Url.Action("Download", "Student", new { filename = "GautamYadav", path = dt.Rows[i][3] })"><u>This</u></a>
+                                    assignment was uploaded by <strong>@fac.Rows[_i2][1]</strong> on <strong>@dt.Rows[i][5]</strong> last date to submit is <b>@dt.Rows[i][7]</b>
                                 </div>
                                 @{
                                     Html.RenderAction("ShowAssignment", "Admin", new { docID = dt.Rows[i][0] });
@@ -65,21 +66,17 @@
 
 
 <div class="modal fade" id="modal-xl2">
-    <div class="modal-dialog modal-xl mx-5">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Upload Assignment</h4>
+                <h4 class="modal-title">Evaluate Assignment</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                Content
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="reset" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Upload</button>
-            </div>
+            @{
+                Html.RenderAction("Evaluate", "Admin", new { assignmentID = 2});
+            }
         </div>
         <!-- /.modal-content -->
     </div>
