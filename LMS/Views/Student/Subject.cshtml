@@ -229,7 +229,6 @@
                                                     <a href="@Url.Action("Download", "Student", new { filename = assignments.Rows[i][1], path = assignments.Rows[i][3]})"><span class="ti-save"></span></a>
                                                     @if (state == 0)
                                                     {
-
                                                         <a data-toggle="modal" onclick="setAID(@assignments.Rows[i][0])" data-target="#modal-xl2" href="#"><span class="ti-export ml-2"></span></a>
                                                     }
                                                 </td>
@@ -244,7 +243,7 @@
                                                     }
                                                     else if (state == 2)
                                                     {
-                                                        <p class="status-p bg-gradient-primary m-0">Submitted <!--&nbsp;--> @*<i class="ti-check-box mr-1"></i>*@</p>
+                                                        <p class="status-p bg-gradient-success m-0">Submitted <!--&nbsp;--> @*<i class="ti-check-box mr-1"></i>*@</p>
                                                     }
                                                 </td>
                                                 <td class="text-center">
