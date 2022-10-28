@@ -70,7 +70,7 @@
                             <td>
                                 <ul class="d-flex justify-content-center">
                                     <li class="mr-3"><a href="@Url.Action("Download", "Student", new { filename = "GautamYadav", path = dataA.Rows[i][2]})" class="text-secondary"><i class="ti ti-import"></i></a></li>
-                                    <li><a onclick="funccc('@dataA.Rows[i][0]')" data-toggle="modal" data-target="#modal-xl2" href="#"><i class="ti-ruler-pencil"></i></a></li>
+                                    <li><a href="@Url.Action("DummyEvaluate", "Admin", new {assignmentID = dataA.Rows[i][0]})"><i class="ti-ruler-pencil"></i></a></li>
                                 </ul>
                             </td>
                         </tr>
@@ -88,5 +88,3 @@ else
         Umm!! No assignemnts found.
     </div>
 }
-
-

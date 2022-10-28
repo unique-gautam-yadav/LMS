@@ -9,7 +9,11 @@
     DataTable dt = (DataTable)ViewData["data"];
     DataTable sub = (DataTable)ViewData["Subjects"];
     DataTable fac = (DataTable)ViewData["Faculties"];
+
+    bool isNext = ViewBag.isNextID;
+    int nextID = ViewBag.nextID;
 }
+
 
 <h2>Assignments</h2>
 
@@ -75,10 +79,22 @@
                 </button>
             </div>
             @{
-                Html.RenderAction("Evaluate", "Admin", new { assignmentID = 2});
+                if (isNext == true)
+                {
+                    Html.RenderAction("Evaluate", "Admin", new { assignmentID = nextID });
+                }
             }
         </div>
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+@section Scripts{
+    <script>
+        if ('@isNext' == 'True' || '@isNext' == 'true') {
+            $("#modal-xl2").modal()
+        }
+    </script>
+
+}

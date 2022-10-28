@@ -232,6 +232,17 @@ namespace LMS.Controllers
 
         public ActionResult Assignments()
         {
+            int nextID = 0;
+            bool isNextID = false;
+
+            if (TempData["aaID"] != null)
+            {
+                nextID = Convert.ToInt32(TempData["aaID"]);
+                isNextID = true;
+            }
+
+            TempData["aaID"] = null;
+
             DataTable data = new DataTable();
             DataTable fac = new DataTable();
             DataTable subjects = new DataTable();
@@ -254,6 +265,9 @@ namespace LMS.Controllers
                     ad.Fill(fac);
                 }
             }
+
+            ViewBag.nextID = nextID;
+            ViewBag.isNextID = isNextID;
 
             ViewData["data"] = data;
             ViewData["Subjects"] = subjects;
@@ -313,5 +327,26 @@ namespace LMS.Controllers
             ViewData["students"] = students;
             return View();
         }
+
+        public ActionResult DummyEvaluate(int assignmentID)
+        {
+            TempData["aaID"] = assignmentID;
+            return RedirectToAction("Assignments");
+        }
+
+        [HttpPost]
+        public ActionResult Evaluate(EvalAssignment model)
+        {
+            int status = 0;
+
+            using (SqlConnection conn = new SqlConnection(DataBase))
+            {
+
+            }
+
+            return RedirectToAction("Assignments");
+        }
+
+
     }
 }

@@ -14,10 +14,11 @@
 
 <style>
     .profile {
-        height: 35px;
-        width: 35px;
+        height: 65px;
+        width: 65px;
         border-radius: 50%;
         margin-right: 12px;
+        border: 5px solid #2f4f4f29;
     }
 </style>
 <div class="col-12">
@@ -25,7 +26,7 @@
     <div class="card">
         <div class="card-body">
             <h4 class="header-title">Student</h4>
-            <div class="row justify-content-center">
+            <div style="align-items: center;" class="row justify-content-center">
                 <div class="col-md-4">
                     <strong>Student's Name</strong> <br />
                     @students.Rows[i_][3] <br />
@@ -35,7 +36,7 @@
                     @students.Rows[i_][1] <br />
                 </div>
                 <div class="col-md-4">
-                    <strong>ProfilePicture</strong><br />
+                    <strong>ProfilePicture</strong> &nbsp;&nbsp;&nbsp;&nbsp;
                     <img class="profile" src="@imgUrl" alt="@students.Rows[i_][3]" /><br />
                 </div>
             </div>
