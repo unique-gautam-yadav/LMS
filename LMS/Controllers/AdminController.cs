@@ -232,17 +232,43 @@ namespace LMS.Controllers
 
         public ActionResult Assignments()
         {
+            DataTable data = new DataTable();
+            DataTable fac = new DataTable();
+            DataTable subjects = new DataTable();
+            using (SqlConnection conn = new SqlConnection(DataBase))
+            {
+                string sql1 = "SELECT * FROM Docs_Diploma_CS WHERE Type = 'Assignment'";
+                string sql2 = "SELECT Id, Name FROM Diploma_CS";
+                string sql3 = "SELECT facultyID, Name FROM Faculty";
+                using (SqlDataAdapter ad = new SqlDataAdapter(sql1, conn))
+                {
+                    ad.Fill(data);
+                }
+                
+                using (SqlDataAdapter ad = new SqlDataAdapter(sql2 , conn))
+                {
+                    ad.Fill(subjects);
+                }
+                using (SqlDataAdapter ad = new SqlDataAdapter (sql3 , conn))
+                {
+                    ad.Fill(fac);
+                }
+            }
+
+            ViewData["data"] = data;
+            ViewData["Subjects"] = subjects;
+            ViewData["Faculties"] = fac;
             return View();
         }
 
-        public ActionResult ShowAssignment(int aID = 0)
+        public ActionResult ShowAssignment(int docID = 0)
         {
             DataTable dtAssignment = new DataTable();
             DataTable dtStudents = new DataTable();
             using (SqlConnection conn = new SqlConnection(DataBase))
             {
                 conn.Open();
-                string sql1 = "SELECT * FROM Assignments WHERE assignmentID = " + aID;
+                string sql1 = "SELECT * FROM Assignments WHERE documentID = " + docID;
                 string sql2 = "SELECT studentID, Name FROM Students WHERE course = 'Diploma' AND Branch = 'CS'";
                 
                 using (SqlDataAdapter ad = new SqlDataAdapter(sql1, conn))
