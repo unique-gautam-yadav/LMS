@@ -12,6 +12,8 @@
 
     bool isNext = ViewBag.isNextID;
     int nextID = ViewBag.nextID;
+
+    string evalStatus = ViewBag.evalStatus;
 }
 
 
@@ -92,6 +94,9 @@
 
 @section Scripts{
     <script>
+
+        alert('@evalStatus')
+
         if ('@isNext' == 'True' || '@isNext' == 'true') {
             $("#modal-xl2").modal()
         }

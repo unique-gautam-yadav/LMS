@@ -1,4 +1,6 @@
 ﻿@using System.Data;
+
+
 @{
     ViewBag.Title = ViewBag.Name;
 
@@ -14,6 +16,9 @@
     bool hasAssignment = assignments.Rows.Count > 0;
     bool hasNotes = notes.Rows.Count > 0;
     bool hasSyllabus = syllabus.Rows.Count > 0;
+
+
+    DataTable uploads = (DataTable)ViewData["uploads"];
 }
 
 @section Styles{
@@ -193,6 +198,10 @@
                                             int temp = i + 1;
                                             DateTime lastDate = Convert.ToDateTime(assignments.Rows[i][7]);
                                             int state = 0;
+
+                                            string exp = "documentID = " + assignments.Rows[i][0];
+                                            DataRow[] d = uploads.Select(exp);
+
                                             if (upA.Contains(id))
                                             {
                                                 state = 2;
@@ -247,10 +256,43 @@
                                                     }
                                                 </td>
                                                 <td class="text-center">
-                                                    ---
+                                                    @if (state == 2)
+                                                    {
+                                                        int _i = uploads.Rows.IndexOf(d[0]);
+
+                                                        if (uploads.Rows[_i][5].ToString() == "NaN")
+                                                        {
+                                                            <div>---</div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div>@uploads.Rows[_i][5]</div>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <div>---</div>
+                                                    }
                                                 </td>
                                                 <td class="text-center">
-                                                    ---
+                                                    @if (state == 2)
+                                                    {
+                                                        int _i = uploads.Rows.IndexOf(d[0]);
+
+                                                        if (uploads.Rows[_i][5].ToString() == "NaN")
+                                                        {
+                                                            <div>---</div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div>@uploads.Rows[_i][6]</div>
+                                                        }
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <div>---</div>
+                                                    }
                                                 </td>
                                             </tr>
                                         }

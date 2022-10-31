@@ -159,11 +159,16 @@ namespace LMS.Controllers
                 DataTable dataTable = new DataTable();
                 DataTable dataTable1 = new DataTable();
                 DataTable dataTable2 = new DataTable();
+                DataTable uploads = new DataTable();
+
+
                 using (SqlConnection conn = new SqlConnection(DataBase))
                 {
                     conn.Open();
                     string sql1 = "select * from Faculty where Subjects like @sub";
                     string sql2 = "select * from Docs_Diploma_CS where SubjectID = @id AND Type = @dType";
+
+
                     using (SqlCommand cmd = new SqlCommand(sql1, conn))
                     {
                         cmd.Parameters.AddWithValue("@sub", ("%" + subName + "%"));
@@ -189,6 +194,9 @@ namespace LMS.Controllers
                         }
                         ViewData["Faculty"] = facultyDetials;
                     }
+
+
+
                     using (SqlCommand cmd = new SqlCommand(sql2, conn))
                     {
                         cmd.Parameters.AddWithValue("@id", subId);
@@ -197,6 +205,9 @@ namespace LMS.Controllers
                         ad.Fill(dataTable);
                         ViewData["Assignments"] = dataTable;
                     }
+
+
+
                     using (SqlCommand cmd = new SqlCommand(sql2, conn))
                     {
                         cmd.Parameters.AddWithValue("@id", subId);
@@ -205,6 +216,9 @@ namespace LMS.Controllers
                         ad.Fill(dataTable1);
                         ViewData["Notes"] = dataTable1;
                     }
+
+
+
                     using (SqlCommand cmd = new SqlCommand(sql2, conn))
                     {
                         cmd.Parameters.AddWithValue("@id", subId);
@@ -213,6 +227,8 @@ namespace LMS.Controllers
                         ad.Fill(dataTable2);
                         ViewData["Syllabus"] = dataTable2;
                     }
+
+
                     if (dataTable.Rows.Count > 0)
                     {
                         List<int> uploadedAssignent = new List<int>();
@@ -230,6 +246,17 @@ namespace LMS.Controllers
                         }
                         ViewData["uploadedAssignments"] = uploadedAssignent;
                     }
+
+                    string sql4 = "SELECT * FROM Assignments WHERE studentID = '" + Session["ID"] + "'";
+                    using (SqlDataAdapter ad = new SqlDataAdapter(sql4, conn))
+                    {
+                        ad.Fill(uploads);
+                    }
+                    ViewData["uploads"] = uploads;
+
+
+
+
                 }
                 ViewBag.Name = subName;
                 return View();

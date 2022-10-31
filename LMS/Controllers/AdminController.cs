@@ -164,7 +164,7 @@ namespace LMS.Controllers
                     string path = Path.Combine("D:/LMS", model.upload_type, dtt + "_" + model.title.Replace(' ', '_').Trim() + ext);
 
                     int parentI = 0;
-                        
+
                     using (SqlConnection conn = new SqlConnection(DataBase))
                     {
                         string sql2;
@@ -178,15 +178,15 @@ namespace LMS.Controllers
                             sql2 = "INSERT INTO Docs_Diploma_CS ([Title], [Type], [Path], [SubjectID], [uploadedOn], [facultyID], [lastDate]) " +
                             "VALUES (@title, @type, @path, @id, CURRENT_TIMESTAMP, @facultyID, '" + res.ToString("MMMM dd yyyy h:mm tt") + "')";
                         }
-                        else 
+                        else
                         {
                             sql2 = "INSERT INTO Docs_Diploma_CS ([Title], [Type], [Path], [SubjectID], [uploadedOn], [facultyID]) " +
                             "VALUES (@title, @type, @path, @id, CURRENT_TIMESTAMP, @facultyID)";
                         }
-                        
+
                         Console.WriteLine("Converted DateTime value...");
                         conn.Open();
-                        string sql1 = "SELECT Id FROM Diploma_CS WHERE Name = @subject";                        
+                        string sql1 = "SELECT Id FROM Diploma_CS WHERE Name = @subject";
                         using (SqlCommand cmd = new SqlCommand(sql1, conn))
                         {
                             cmd.Parameters.AddWithValue("@subject", model.subb);
@@ -220,7 +220,7 @@ namespace LMS.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.UploadSatatus = "error"+ ex.Message;
+                    ViewBag.UploadSatatus = "error" + ex.Message;
                 }
             }
             else
@@ -235,13 +235,21 @@ namespace LMS.Controllers
             int nextID = 0;
             bool isNextID = false;
 
+            string evalStatus = "no";
+
             if (TempData["aaID"] != null)
             {
                 nextID = Convert.ToInt32(TempData["aaID"]);
                 isNextID = true;
             }
 
+            if (TempData["evalStatus"] != null)
+            {
+                evalStatus = TempData["evalStatus"].ToString();
+            }
+
             TempData["aaID"] = null;
+            TempData["evalStatus"] = null;
 
             DataTable data = new DataTable();
             DataTable fac = new DataTable();
@@ -255,12 +263,12 @@ namespace LMS.Controllers
                 {
                     ad.Fill(data);
                 }
-                
-                using (SqlDataAdapter ad = new SqlDataAdapter(sql2 , conn))
+
+                using (SqlDataAdapter ad = new SqlDataAdapter(sql2, conn))
                 {
                     ad.Fill(subjects);
                 }
-                using (SqlDataAdapter ad = new SqlDataAdapter (sql3 , conn))
+                using (SqlDataAdapter ad = new SqlDataAdapter(sql3, conn))
                 {
                     ad.Fill(fac);
                 }
@@ -268,6 +276,7 @@ namespace LMS.Controllers
 
             ViewBag.nextID = nextID;
             ViewBag.isNextID = isNextID;
+            ViewBag.evalStatus = evalStatus;
 
             ViewData["data"] = data;
             ViewData["Subjects"] = subjects;
@@ -284,7 +293,7 @@ namespace LMS.Controllers
                 conn.Open();
                 string sql1 = "SELECT * FROM Assignments WHERE documentID = " + docID;
                 string sql2 = "SELECT studentID, Name FROM Students WHERE course = 'Diploma' AND Branch = 'CS'";
-                
+
                 using (SqlDataAdapter ad = new SqlDataAdapter(sql1, conn))
                 {
                     ad.Fill(dtAssignment);
@@ -301,7 +310,7 @@ namespace LMS.Controllers
             return View();
         }
 
-        public ActionResult Evaluate(int assignmentID = 1)
+        public ActionResult Evaluate(int assignmentID)
         {
             DataTable assignment = new DataTable();
             DataTable students = new DataTable();
@@ -337,13 +346,33 @@ namespace LMS.Controllers
         [HttpPost]
         public ActionResult Evaluate(EvalAssignment model)
         {
-            int status = 0;
-
-            using (SqlConnection conn = new SqlConnection(DataBase))
+            string status = "NaN";
+            try
             {
+                using (SqlConnection conn = new SqlConnection(DataBase))
+                {
+                    conn.Open();
+                    string marks = model.mo.ToString() + " / " + model.mm.ToString();
+                    string sql1 = "UPDATE Assignments SET marks = @marks, remark = @remark," +
+                        " Evaluater = @facID WHERE assignmentID = @id";
 
+                    using (SqlCommand cmd = new SqlCommand(sql1, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@id", model.Id);
+                        cmd.Parameters.AddWithValue("@marks", marks);
+                        cmd.Parameters.AddWithValue("@remark", model.remark);
+                        cmd.Parameters.AddWithValue("@facID", Convert.ToInt32(Session["tableID"]));
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                status = ex.Message;
             }
 
+            TempData["evalStatus"] = status;
             return RedirectToAction("Assignments");
         }
 
