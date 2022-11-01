@@ -27,7 +27,7 @@
                     @for (int i = 0; i < dataA.Rows.Count; i++)
                     {
                         bool ch = true;
-                        if (dataA.Rows[i][5].ToString() == "")
+                        if (dataA.Rows[i][5].ToString() == "NaN")
                         {
                             ch = false;
                         }
@@ -47,9 +47,11 @@
                             <td>
                                 @if (ch)
                                 {
+                                    string[] str = dataA.Rows[i][5].ToString().Split('/');
+                                    double ln = Convert.ToDouble(str[0]) / Convert.ToDouble(str[1]) * 100;
 
                                     <div class="progress" style="height: 8px;">
-                                        <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar" role="progressbar" style="width: @ln%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 }
                                 else

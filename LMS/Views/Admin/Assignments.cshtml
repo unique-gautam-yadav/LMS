@@ -94,9 +94,9 @@
 
 @section Scripts{
     <script>
-
-        alert('@evalStatus')
-
+        if ('@evalStatus' == 'NaN') {
+            alert("Evaluated Successfully !!")
+        }
         if ('@isNext' == 'True' || '@isNext' == 'true') {
             $("#modal-xl2").modal()
         }
