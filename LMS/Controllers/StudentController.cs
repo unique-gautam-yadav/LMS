@@ -14,6 +14,11 @@ namespace LMS.Controllers
     public class StudentController : Controller
     {
         string DataBase = ConfigurationManager.ConnectionStrings["DataBase"].ConnectionString;
+
+        public ActionResult Login2()
+        {
+            return View();
+        }
         public ActionResult Index()
         {
             Response.Cache.SetNoStore();
