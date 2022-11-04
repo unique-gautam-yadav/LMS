@@ -2446,7 +2446,6 @@
     <Folder Include="files\Assignment\" />
     <Folder Include="files\Notes\" />
     <Folder Include="files\Syllabus\" />
-    <Folder Include="Views\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

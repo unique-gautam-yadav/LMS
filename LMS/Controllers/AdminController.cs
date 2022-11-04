@@ -138,6 +138,13 @@ namespace LMS.Controllers
                         ad.Fill(dataTable);
                     }
                     string sql1 = "select * from Diploma_CS";
+
+
+                    /*string sql1 = "SELECT Diploma_CS.* FROM Diploma_CS INNER JOIN Faculty ON" +
+                        " Faculty.Subjects LIKE CONCAT('%', Diploma_CS.Name , '%') WHERE" +
+                        " Faculty.facultyID = " + Session["tableID"];*/
+
+
                     using (SqlDataAdapter ad = new SqlDataAdapter(sql1, conn))
                     {
                         ad.Fill(dataTable1);
@@ -256,7 +263,20 @@ namespace LMS.Controllers
             DataTable subjects = new DataTable();
             using (SqlConnection conn = new SqlConnection(DataBase))
             {
-                string sql1 = "SELECT * FROM Docs_Diploma_CS WHERE Type = 'Assignment'";
+                string sql1 = "SELECT Docs_Diploma_CS.* FROM Docs_Diploma_CS INNER JOIN " +
+                    "Diploma_CS ON Diploma_CS.Id = Docs_Diploma_CS.SubjectID INNER JOIN " +
+                    "Faculty ON Faculty.Subjects LIKE CONCAT('%', Diploma_CS.Name, '%') " +
+                    "WHERE Docs_Diploma_CS.Type = 'Assignment' AND Faculty.facultyID = " + Session["tableID"];
+
+
+
+                /*string sql1 = "SELECT Docs_Diploma_CS.* FROM Assignments INNER JOIN Docs_Diploma_CS ON " +
+                    "Assignments.documentID = Docs_Diploma_CS.documentID INNER JOIN Diploma_CS ON " +
+                    "Diploma_CS.Id = Docs_Diploma_CS.SubjectID INNER JOIN Faculty ON " +
+                    "Faculty.Subjects LIKE CONCAT('%', Diploma_CS.Name, '%') WHERE Faculty.facultyID = " + Session["tableID"];*/
+
+
+
                 string sql2 = "SELECT Id, Name FROM Diploma_CS";
                 string sql3 = "SELECT facultyID, Name FROM Faculty";
                 using (SqlDataAdapter ad = new SqlDataAdapter(sql1, conn))

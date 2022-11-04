@@ -23,20 +23,10 @@
     <div class="card">
         <div class="card-body">
             <h4 class="header-title">Assignments</h4>
-            <div id="accordion00" class="according accordion-s3 gradiant-bg">
+            <div id="accordionnnn" class="according accordion-s3 gradiant-bg">
                 @for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    string classes = "card-link";
-                    string classes2 = "collapse";
-                    if (i == 1)
-                    {
-                        classes2 += " show";
-                    }
-                    else
-                    {
-                        classes += " collapsed";
-                    }
-                    string id = "accordion" + dt.Rows[i][0];
+                    string id = "accordion" + i;
                     string exp = "Id = " + dt.Rows[i][4];
                     DataRow[] r = sub.Select(exp);
                     int _i = sub.Rows.IndexOf(r[0]);
@@ -47,11 +37,11 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <a class="@classes right" data-toggle="collapse" href="#@id">
+                            <a class="card-link collapsed right" data-toggle="collapse" href="#@id">
                                 @dt.Rows[i][1] (@sub.Rows[_i][1])
                             </a>
                         </div>
-                        <div id="@id" class="@classes2" data-parent="#accordion00">
+                        <div id="@id" class="collapse" data-parent="#accordionnnn">
                             <div id="dataTablee" class="card-body">
                                 <div class="alert alert-primary">
                                     <a class="alert-link" href="@Url.Action("Download", "Student", new { filename = "GautamYadav", path = dt.Rows[i][3] })"><u>This</u></a>
