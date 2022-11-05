@@ -15,10 +15,6 @@
 
     string evalStatus = ViewBag.evalStatus;
 }
-
-
-<h2>Assignments</h2>
-
 <div class="col-lg-12 mt-5">
     <div class="card">
         <div class="card-body">
@@ -44,7 +40,7 @@
                         <div id="@id" class="collapse" data-parent="#accordionnnn">
                             <div id="dataTablee" class="card-body">
                                 <div class="alert alert-primary">
-                                    <a class="alert-link" href="@Url.Action("Download", "Student", new { filename = "GautamYadav", path = dt.Rows[i][3] })"><u>This</u></a>
+                                    <a class="alert-link" href="@Url.Action("Download", "Student", new { filename = "Gautam Yadav", path = dt.Rows[i][3] })"><u>This</u></a>
                                     assignment was uploaded by <strong>@fac.Rows[_i2][1]</strong> on <strong>@dt.Rows[i][5]</strong> last date to submit is <b>@dt.Rows[i][7]</b>
                                 </div>
                                 @{

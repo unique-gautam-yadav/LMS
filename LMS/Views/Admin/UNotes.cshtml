@@ -1,0 +1,33 @@
+﻿@{
+    Layout = null;
+}
+
+
+<div class="single-table">
+    <div class="table-responsive">
+        <table class="table text-center">
+            <thead class="text-uppercase bg-gradient-indigo">
+                <tr class="text-white">
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">date</th>
+                    <th scope="col">price</th>
+                    <th scope="col">action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < 5; i++)
+                {
+                    int t = i + 1;
+                    <tr>
+                        <th scope="row">@t</th>
+                        <td>Mark</td>
+                        <td>09 / 07 / 2018</td>
+                        <td>$120</td>
+                        <td><i class="ti-trash"></i></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

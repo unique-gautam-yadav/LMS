@@ -2440,6 +2440,10 @@
     <Content Include="vendor\bootstrap\css\bootstrap.css.map" />
     <Content Include="vendor\bootstrap\css\bootstrap.min.css.map" />
     <Content Include="Views\Student\Login2.cshtml" />
+    <Content Include="Views\Admin\Subjets.cshtml" />
+    <Content Include="Views\Admin\UAssignments.cshtml" />
+    <Content Include="Views\Admin\UNotes.cshtml" />
+    <Content Include="Views\Admin\USyllabus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

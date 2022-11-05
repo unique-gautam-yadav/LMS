@@ -396,5 +396,24 @@ namespace LMS.Controllers
             return RedirectToAction("Assignments");
         }
 
+        public ActionResult Subjets()
+        {
+            return View();
+        }
+
+        public ActionResult USyllabus()
+        {
+            return View();
+        }
+
+        public ActionResult UNotes()
+        {
+            return View();
+        }
+
+        public ActionResult UAssignments()
+        {
+            return View();
+        }
     }
 }
