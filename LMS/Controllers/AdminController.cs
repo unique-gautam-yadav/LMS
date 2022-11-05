@@ -398,22 +398,112 @@ namespace LMS.Controllers
 
         public ActionResult Subjets()
         {
-            return View();
+            if (Session["tableID"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                DataTable subjets = new DataTable();
+                using (SqlConnection conn = new SqlConnection(DataBase))
+                {
+                    conn.Open();
+                    string sql1 = "SELECT Diploma_CS.* FROM Diploma_CS INNER JOIN Faculty ON " +
+                        "Faculty.Subjects LIKE CONCAT('%', Diploma_CS.Name, '%') WHERE" +
+                        " Faculty.facultyID = " + Session["tableID"];
+
+                    using (SqlDataAdapter ad = new SqlDataAdapter(sql1, conn))
+                    {
+                        ad.Fill(subjets);
+                    }
+
+                }
+                ViewData["Subjects"] = subjets;
+                return View();
+            }
         }
 
-        public ActionResult USyllabus()
+        public ActionResult USyllabus(int subId = 0)
         {
-            return View();
+            if (Session["tableID"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+            else
+            {
+
+                DataTable data = new DataTable();
+                using (SqlConnection conn = new SqlConnection(DataBase))
+                {
+                    string sql1 = "SELECT Docs_Diploma_CS.* FROM Docs_Diploma_CS INNER JOIN Diploma_CS ON " +
+                   "Docs_Diploma_CS.SubjectID = Diploma_CS.Id INNER JOIN Faculty ON " +
+                   "Faculty.Subjects LIKE CONCAT('%', Diploma_CS.Name, '%') WHERE " +
+                   "Docs_Diploma_CS.Type = 'Syllabus' AND Faculty.facultyID = " + Session["tableID"];
+
+                    using (SqlDataAdapter ad = new SqlDataAdapter(sql1, conn))
+                    {
+                        ad.Fill(data);
+                    }
+
+                    ViewData["Data"] = data;
+                }
+                return View();
+            }
         }
 
-        public ActionResult UNotes()
+        public ActionResult UNotes(int subId = 0)
         {
-            return View();
+            if (Session["tableID"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                DataTable data = new DataTable();
+                using (SqlConnection conn = new SqlConnection(DataBase))
+                {
+                    string sql1 = "SELECT Docs_Diploma_CS.* FROM Docs_Diploma_CS INNER JOIN Diploma_CS ON " +
+                   "Docs_Diploma_CS.SubjectID = Diploma_CS.Id INNER JOIN Faculty ON " +
+                   "Faculty.Subjects LIKE CONCAT('%', Diploma_CS.Name, '%') WHERE " +
+                   "Docs_Diploma_CS.Type = 'Notes' AND Faculty.facultyID = " + Session["tableID"];
+
+                    using (SqlDataAdapter ad = new SqlDataAdapter(sql1, conn))
+                    {
+                        ad.Fill(data);
+                    }
+
+                    ViewData["Data"] = data;
+                }
+                return View();
+            }
         }
 
-        public ActionResult UAssignments()
+        public ActionResult UAssignments(int subId = 0)
         {
-            return View();
+            if (Session["tableID"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                DataTable data = new DataTable();
+                using (SqlConnection conn = new SqlConnection(DataBase))
+                {
+                    string sql1 = "SELECT Docs_Diploma_CS.* FROM Docs_Diploma_CS INNER JOIN Diploma_CS ON " +
+                   "Docs_Diploma_CS.SubjectID = Diploma_CS.Id INNER JOIN Faculty ON " +
+                   "Faculty.Subjects LIKE CONCAT('%', Diploma_CS.Name, '%') WHERE " +
+                   "Docs_Diploma_CS.Type = 'Assignment' AND Faculty.facultyID = " + Session["tableID"];
+
+                    using (SqlDataAdapter ad = new SqlDataAdapter(sql1, conn))
+                    {
+                        ad.Fill(data);
+                    }
+
+                    ViewData["Data"] = data;
+                }
+                ViewBag.Msg = subId;
+                return View();
+            }
         }
     }
 }

@@ -1,53 +1,62 @@
-﻿
+﻿@using System.Data
+
+
 @{
     ViewBag.Title = "Subjets";
     Layout = "~/Views/Shared/Admin/_Layout.cshtml";
+
+
+    DataTable sub = (DataTable)ViewData["Subjects"];
+
 }
 <div class="col-lg-12 mt-5">
     <div class="card">
         <div class="card-body">
-            <h4 class="header-title">Accordion 1</h4>
+            <h4 class="header-title">Subjects</h4>
             <div id="accordion1" class="according">
-                <div class="card">
-                    <div class="card-header">
-                        <a class="card-link" data-toggle="collapse" href="#accordion11">
-                            Collapsible Group
-                            Item #1
-                        </a>
-                    </div>
-                    <div id="accordion11" class="collapse show" data-parent="#accordion1">
-                        <div class="card-body">
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Assignments</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Notes</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Syllabus</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content mt-3" id="myTabContent">
-                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                    @{
-                                        Html.RenderPartial("UAssignments");
-                                    }
-                                </div>
-                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                    @{ 
-                                        Html.RenderPartial("UNotes");
-                                    }
-                                </div>
-                                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                                    @{ 
-                                        Html.RenderPartial("USyllabus");
-                                    }
+                @for (int i = 0; i < sub.Rows.Count; i++)
+                {
+                    int t = i + 1;
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="card-link" data-toggle="collapse" href="#accordion_@t@i">
+                                #@t &nbsp; @sub.Rows[i][1]
+                            </a>
+                        </div>
+                        <div id="accordion_@t@i" class="collapse" data-parent="#accordion1">
+                            <div class="card-body">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Assignments</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Notes</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Syllabus</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content mt-3" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        @{
+                                            Html.RenderPartial("UAssignments", new { subId = sub.Rows[i][0] });
+                                        }
+                                    </div>
+                                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                        @{
+                                            Html.RenderPartial("UNotes", new { subId = sub.Rows[i][0] });
+                                        }
+                                    </div>
+                                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                        @{
+                                            Html.RenderPartial("USyllabus", new { subId = sub.Rows[i][0] });
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
             </div>
         </div>
     </div>
