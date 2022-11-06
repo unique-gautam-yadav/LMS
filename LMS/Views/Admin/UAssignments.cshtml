@@ -6,11 +6,11 @@
 
     DataTable data = (DataTable)ViewData["Data"];
 }
+<link href="~/dist/style.css" rel="stylesheet" />
 
-@if (data != null && data.Rows.Count > 0 )
+
+@if (data != null && data.Rows.Count > 0)
 {
-
-
     <div class="single-table">
         <div class="table-responsive">
             <table class="table text-center">
@@ -19,8 +19,8 @@
                         <th scope="col">ID</th>
                         <th scope="col">Name</th>
                         <th scope="col">date</th>
-                        <th scope="col">price</th>
-                        <th scope="col">action</th>
+                        <th scope="col">Last Date</th>
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,17 +29,24 @@
                         int t = i + 1;
                         <tr>
                             <th scope="row">@t</th>
-                            <td>Mark</td>
-                            <td>09 / 07 / 2018</td>
-                            <td>$120</td>
-                            <td><i class="ti-trash"></i></td>
+                            <td>@data.Rows[i][1]</td>
+                            <td>@data.Rows[i][5]</td>
+                            <td>@data.Rows[i][7]</td>
+                            <td>
+                                <a class="text-decoration-none" href="@Url.Action("Download", "Student", new {filename = "GautamYadav", path = data.Rows[i][3]})"><i class="ti-download"></i></a> &nbsp;
+                                <a onclick="return confirm('Are you sure ?')" class="text-decoration-none" href="@Url.Action("Delete", "Admin", new {filename="GautamYadav", path = data.Rows[i][3] })"> <i class="ti-trash"></i></a> &nbsp;
+                                <i class="ti-pencil-alt"></i>
+                            </td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
     </div>
-
 }
-
-@ViewBag.Msg
+else
+{
+    <div class="alert alert-danger" role="alert">
+        <strong>Hmmm!!</strong> No records found.
+    </div>
+}

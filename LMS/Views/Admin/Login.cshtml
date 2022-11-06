@@ -25,35 +25,7 @@
     <link rel="stylesheet" href="~/assets/css/styles.css">
     <link rel="stylesheet" href="~/assets/css/responsive.css">
 
-
-    <style>
-        .redir-btn {
-            text-align: center;
-            text-decoration: none;
-            color: white;
-            background-color: black;
-            height: 45px;
-            padding-top: 12.5px;
-            border-radius: 50px;
-            margin-top: 40px;
-            box-shadow: 0 0 22px rgb(0 0 0 / 7%);
-        }
-
-            .redir-btn a {
-                color: white;
-            }
-
-            .redir-btn:hover {
-            }
-
-        .backimg {
-            width: 100%;
-            height: auto;
-            object-fit: contain;
-            position: absolute;
-        }
-    </style>
-
+    <link href="~/dist/style.css" rel="stylesheet" />
     <!-- modernizr css -->
     <script src="/assets/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
@@ -102,8 +74,11 @@
                         <div class="submit-btn-area">
                             <button id="form_submit" type="submit">Submit <i class="ti-arrow-right"></i></button>
                         </div>
-                        <div class="redir-btn">
-                            <a href="~/Student/Login" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> Student Portal</a>
+                        <div class="redir-btn d-flex">
+
+                            <a href="~/Student/Login" class="px-2 py-2 mr-md-1 text-center">
+                                <div></div><span class="ti-user mr-2"></span>Student Portal
+                            </a>
                         </div>
                     </div>
                 }

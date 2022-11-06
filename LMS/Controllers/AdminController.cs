@@ -6,6 +6,8 @@ using System.Data;
 using LMS.Models;
 using System.IO;
 using System.Globalization;
+using System.Collections.Generic;
+using Antlr.Runtime.Tree;
 
 namespace LMS.Controllers
 {
@@ -396,7 +398,7 @@ namespace LMS.Controllers
             return RedirectToAction("Assignments");
         }
 
-        public ActionResult Subjets()
+        public ActionResult Subjects()
         {
             if (Session["tableID"] == null)
             {
@@ -404,6 +406,19 @@ namespace LMS.Controllers
             }
             else
             {
+                List<dynamic> data = (List <dynamic>)TempData["UploadData"];
+
+                if(data != null)
+                {
+                    ViewBag.hasUpload = true;
+                    ViewBag.uploadType = data[1];
+                    ViewBag.subID = data[0];
+                }
+                else
+                {
+                    ViewBag.hasUpload = false;
+                }
+
                 DataTable subjets = new DataTable();
                 using (SqlConnection conn = new SqlConnection(DataBase))
                 {
@@ -492,7 +507,8 @@ namespace LMS.Controllers
                     string sql1 = "SELECT Docs_Diploma_CS.* FROM Docs_Diploma_CS INNER JOIN Diploma_CS ON " +
                    "Docs_Diploma_CS.SubjectID = Diploma_CS.Id INNER JOIN Faculty ON " +
                    "Faculty.Subjects LIKE CONCAT('%', Diploma_CS.Name, '%') WHERE " +
-                   "Docs_Diploma_CS.Type = 'Assignment' AND Faculty.facultyID = " + Session["tableID"];
+                   "Docs_Diploma_CS.Type = 'Assignment' AND Faculty.facultyID = "
+                   + Session["tableID"] + " AND Diploma_CS.Id = " + subId;
 
                     using (SqlDataAdapter ad = new SqlDataAdapter(sql1, conn))
                     {
@@ -501,9 +517,126 @@ namespace LMS.Controllers
 
                     ViewData["Data"] = data;
                 }
-                ViewBag.Msg = subId;
                 return View();
             }
+        }
+
+        public ActionResult Delete(string path)
+        {
+            FileInfo file = new FileInfo(path);
+            string fileName = file.Name;
+            using (SqlConnection conn = new SqlConnection(DataBase))
+            {
+                int docID = 0;
+                conn.Open();
+                string sql1 = "SELECT documentID FROM Docs_Diploma_CS WHERE Path LIKE '%" + fileName + "%'";
+                using (SqlCommand cmd = new SqlCommand(sql1, conn))
+                {
+                    SqlDataReader r = cmd.ExecuteReader();
+                    while (r.Read())
+                    {
+                        docID = r.GetInt32(0);
+                    }
+                    r.Close();
+                }
+
+                string sql2 = "DELETE FROM Docs_Diploma_CS WHERE documentID = " + docID;
+                using (SqlCommand cmd = new SqlCommand(sql2, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                string sql3 = "DELETE FROM Assignments WHERE documentID = " + docID;
+                using (SqlCommand cmd = new SqlCommand(sql3, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                if (docID > 0)
+                {
+                    file.Delete();
+                    TempData["Delete_st"] = "Done";
+                }
+                else
+                {
+                    TempData["Delete_st"] = "No";
+                }
+            }
+            return RedirectToAction("Subjects");
+        }
+        public ActionResult DummyUpload(int subID, string type)
+        {
+            List<dynamic> d = new List<dynamic>();
+
+            d.Add(subID);
+            d.Add(type);
+
+            TempData["UploadData"] = d;
+
+            return RedirectToAction("Subjects");
+        }
+
+
+        public ActionResult Upload(int subID, string type)
+        {
+            using(SqlConnection conn = new SqlConnection(DataBase))
+            {
+                conn.Open();
+
+
+                int subP = 0;
+                List<string> data = new List<string>();
+                data.Add(subID.ToString());
+                data.Add(type.ToString());
+
+                string sql1 = "SELECT Name, ParentID FROM Diploma_CS WHERE Id = @subid";
+                using(SqlCommand cmd = new SqlCommand(sql1, conn))
+                {
+                    cmd.Parameters.AddWithValue("@subid", subID);
+
+                    SqlDataReader r = cmd.ExecuteReader();
+                    while (r.Read())
+                    {
+                        data.Add(r.GetString(0));
+                        
+                        subP = r.GetInt32(1);
+                    }
+                    r.Close();
+                }
+
+
+                using (SqlCommand cmd = new SqlCommand(sql1, conn))
+                {
+                    cmd.Parameters.AddWithValue("@subid", subP);
+
+                    SqlDataReader r = cmd.ExecuteReader();
+                    while (r.Read())
+                    {
+                        data.Add(r.GetString(0));
+                        subP = r.GetInt32(1);
+                    }
+
+                    r.Close();
+                }
+
+
+                using (SqlCommand cmd = new SqlCommand(sql1, conn))
+                {
+                    cmd.Parameters.AddWithValue("@subid", subP);
+
+                    SqlDataReader r = cmd.ExecuteReader();
+                    while (r.Read())
+                    {
+                        data.Add(r.GetString(0));
+                        subP = r.GetInt32(1);
+                    }
+                    r.Close();
+                }
+
+
+                ViewData["data"] = data;
+                
+            }
+            return View();
         }
     }
 }
