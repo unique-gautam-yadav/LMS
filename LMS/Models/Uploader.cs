@@ -17,4 +17,13 @@ namespace LMS.Models
         public string lastDateOnly { get; set; }
         public string lastTimeOnly { get; set; }
     }
+    public class UploadFromSubjects
+    {
+        public int subId { get; set; }
+        public string type { get; set; }
+        public string title { get; set; }
+        public HttpPostedFileBase filee { get; set; }
+        public string lastDateOnly { get; set; }
+        public string lastTimeOnly { get; set; }
+    }
 }

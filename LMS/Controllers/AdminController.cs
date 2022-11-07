@@ -14,8 +14,7 @@ namespace LMS.Controllers
     public class AdminController : Controller
     {
         string DataBase = ConfigurationManager.ConnectionStrings["DataBase"].ConnectionString.ToString();
-        // GET: Admin
-        [HttpGet]
+
         public ActionResult Login()
         {
             Response.Cache.SetNoStore();
@@ -29,6 +28,7 @@ namespace LMS.Controllers
                 return View();
             }
         }
+
         [HttpPost]
         public ActionResult Login(FormCollection collection, Login log)
         {
@@ -159,6 +159,7 @@ namespace LMS.Controllers
             }
 
         }
+
         [HttpPost]
         public ActionResult FileUpload(Uploader model)
         {
@@ -261,8 +262,9 @@ namespace LMS.Controllers
             TempData["evalStatus"] = null;
 
             DataTable data = new DataTable();
-            DataTable fac = new DataTable();
             DataTable subjects = new DataTable();
+
+
             using (SqlConnection conn = new SqlConnection(DataBase))
             {
                 string sql1 = "SELECT Docs_Diploma_CS.* FROM Docs_Diploma_CS INNER JOIN " +
@@ -280,7 +282,6 @@ namespace LMS.Controllers
 
 
                 string sql2 = "SELECT Id, Name FROM Diploma_CS";
-                string sql3 = "SELECT facultyID, Name FROM Faculty";
                 using (SqlDataAdapter ad = new SqlDataAdapter(sql1, conn))
                 {
                     ad.Fill(data);
@@ -290,10 +291,6 @@ namespace LMS.Controllers
                 {
                     ad.Fill(subjects);
                 }
-                using (SqlDataAdapter ad = new SqlDataAdapter(sql3, conn))
-                {
-                    ad.Fill(fac);
-                }
             }
 
             ViewBag.nextID = nextID;
@@ -302,7 +299,6 @@ namespace LMS.Controllers
 
             ViewData["data"] = data;
             ViewData["Subjects"] = subjects;
-            ViewData["Faculties"] = fac;
             return View();
         }
 
@@ -406,9 +402,9 @@ namespace LMS.Controllers
             }
             else
             {
-                List<dynamic> data = (List <dynamic>)TempData["UploadData"];
+                List<dynamic> data = (List<dynamic>)TempData["UploadData"];
 
-                if(data != null)
+                if (data != null)
                 {
                     ViewBag.hasUpload = true;
                     ViewBag.uploadType = data[1];
@@ -563,6 +559,7 @@ namespace LMS.Controllers
             }
             return RedirectToAction("Subjects");
         }
+
         public ActionResult DummyUpload(int subID, string type)
         {
             List<dynamic> d = new List<dynamic>();
@@ -575,10 +572,9 @@ namespace LMS.Controllers
             return RedirectToAction("Subjects");
         }
 
-
         public ActionResult Upload(int subID, string type)
         {
-            using(SqlConnection conn = new SqlConnection(DataBase))
+            using (SqlConnection conn = new SqlConnection(DataBase))
             {
                 conn.Open();
 
@@ -589,7 +585,7 @@ namespace LMS.Controllers
                 data.Add(type.ToString());
 
                 string sql1 = "SELECT Name, ParentID FROM Diploma_CS WHERE Id = @subid";
-                using(SqlCommand cmd = new SqlCommand(sql1, conn))
+                using (SqlCommand cmd = new SqlCommand(sql1, conn))
                 {
                     cmd.Parameters.AddWithValue("@subid", subID);
 
@@ -597,7 +593,7 @@ namespace LMS.Controllers
                     while (r.Read())
                     {
                         data.Add(r.GetString(0));
-                        
+
                         subP = r.GetInt32(1);
                     }
                     r.Close();
@@ -634,9 +630,70 @@ namespace LMS.Controllers
 
 
                 ViewData["data"] = data;
-                
+
             }
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Upload(UploadFromSubjects model)
+        {
+            if (model.filee != null && model.filee.ContentLength > 0)
+            {
+                try
+                {
+                    string ext = Path.GetExtension(model.filee.FileName);
+                    DateTime cur = DateTime.Now;
+                    string dtt = cur.Year.ToString() + cur.Month.ToString() + cur.Day.ToString() + cur.Hour.ToString() + cur.Minute.ToString() + cur.Second.ToString();
+                    string path = Path.Combine("D:/LMS", model.type, dtt + "_" + model.title.Replace(' ', '_').Trim() + ext);
+
+
+                    using (SqlConnection conn = new SqlConnection(DataBase))
+                    {
+                        string sql2;
+                        if (model.type == "Assignment")
+                        {
+                            CultureInfo cultures = new CultureInfo("en-US");
+                            String date = model.lastDateOnly;
+                            String time = model.lastTimeOnly;
+                            String val = date + " " + time;
+                            DateTime res = Convert.ToDateTime(val, cultures);
+                            sql2 = "INSERT INTO Docs_Diploma_CS ([Title], [Type], [Path], [SubjectID], [uploadedOn], [facultyID], [lastDate]) " +
+                            "VALUES (@title, @type, @path, @id, CURRENT_TIMESTAMP, @facultyID, '" + res.ToString("MMMM dd yyyy h:mm tt") + "')";
+                        }
+                        else
+                        {
+                            sql2 = "INSERT INTO Docs_Diploma_CS ([Title], [Type], [Path], [SubjectID], [uploadedOn], [facultyID]) " +
+                            "VALUES (@title, @type, @path, @id, CURRENT_TIMESTAMP, @facultyID)";
+                        }
+
+                        Console.WriteLine("Converted DateTime value...");
+                        conn.Open();
+                        using (SqlCommand cmd = new SqlCommand(sql2, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@title", model.title);
+                            cmd.Parameters.AddWithValue("@type", model.type);
+                            cmd.Parameters.AddWithValue("@path", path);
+                            cmd.Parameters.AddWithValue("@id", model.subId);
+                            cmd.Parameters.AddWithValue("@facultyID", Convert.ToInt32(Session["ID"]));
+
+                            cmd.ExecuteNonQuery();
+
+                            model.filee.SaveAs(path);
+                            ViewBag.UploadSatatus = "success";
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.UploadSatatus = "error" + ex.Message;
+                }
+            }
+            else
+            {
+                ViewBag.UploadSatatus = "nofile";
+            }
+            return RedirectToAction("Subjects");
         }
     }
 }

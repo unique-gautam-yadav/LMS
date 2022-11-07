@@ -38,7 +38,7 @@
 
 </div>
 <hr style="width : 20%; margin: auto;" />
-@using (Html.BeginForm("Evaluate", "Admin", FormMethod.Post))
+@using (Html.BeginForm("Upload", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 
 
@@ -49,7 +49,7 @@
                 <input name="type" hidden value="@data[1]" />
                 <div class="col-md-12 mb-3">
                     <label for="validationCustom01">Title</label>
-                    <input name="mo" type="text" class="form-control" id="validationCustom01" placeholder="Enter Title" required="">
+                    <input name="title" type="text" class="form-control" id="validationCustom01" placeholder="Enter Title" required="">
                     <div class="valid-feedback">
                         Looks good!
                     </div>

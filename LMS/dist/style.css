@@ -3,6 +3,7 @@
     width: 50px;
     height: 50px;
     animation: animate2 500ms;
+    padding-top: 10px;
 }
 
     .a-btn:hover {

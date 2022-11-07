@@ -8,7 +8,6 @@
     ViewBag.Title = "Assignments";
     DataTable dt = (DataTable)ViewData["data"];
     DataTable sub = (DataTable)ViewData["Subjects"];
-    DataTable fac = (DataTable)ViewData["Faculties"];
 
     bool isNext = ViewBag.isNextID;
     int nextID = ViewBag.nextID;
@@ -28,8 +27,6 @@
                     int _i = sub.Rows.IndexOf(r[0]);
 
                     string exp2 = "facultyID = " + dt.Rows[i][6];
-                    DataRow[] r2 = fac.Select(exp2);
-                    int _i2 = fac.Rows.IndexOf(r2[0]);
 
                     <div class="card">
                         <div class="card-header">
@@ -40,8 +37,8 @@
                         <div id="@id" class="collapse" data-parent="#accordionnnn">
                             <div id="dataTablee" class="card-body">
                                 <div class="alert alert-primary">
-                                    <a class="alert-link" href="@Url.Action("Download", "Student", new { filename = "Gautam Yadav", path = dt.Rows[i][3] })"><u>This</u></a>
-                                    assignment was uploaded by <strong>@fac.Rows[_i2][1]</strong> on <strong>@dt.Rows[i][5]</strong> last date to submit is <b>@dt.Rows[i][7]</b>
+                                    <a class="alert-link" href="@Url.Action("Download", "Student", new { filename = "Gautam Yadav", path = dt.Rows[i][3] })"><b><u>This</u></b></a>
+                                    assignment was on <strong>@dt.Rows[i][5]</strong> last date to submit is <b>@dt.Rows[i][7]</b>
                                 </div>
                                 @{
                                     Html.RenderAction("ShowAssignment", "Admin", new { docID = dt.Rows[i][0] });

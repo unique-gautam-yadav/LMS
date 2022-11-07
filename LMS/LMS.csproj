@@ -132,6 +132,7 @@
     </Compile>
     <Compile Include="Models\Asignment.cs" />
     <Compile Include="Models\EvalAssignment.cs" />
+    <Compile Include="Models\Upload.cs" />
     <Compile Include="Models\Uploader.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
