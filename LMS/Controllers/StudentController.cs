@@ -3,11 +3,9 @@ using System.Web.Mvc;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
-using System.Reflection;
 using System.IO;
 using LMS.Models;
 using System;
-using Microsoft.SqlServer.Server;
 
 namespace LMS.Controllers
 {
@@ -28,6 +26,64 @@ namespace LMS.Controllers
             }
             else
             {
+
+
+                //
+
+                if (TempData["234"] != null)
+                {
+                string stt = TempData["234"].ToString();
+                ViewBag.Stu = stt;
+                }
+                using (SqlConnection conn = new SqlConnection(DataBase))
+                {
+                    conn.Open();
+                    string sql = "SELECT (SELECT COUNT(*) FROM Docs_Diploma_CS WHERE Type = " +
+                        "'Assignment' ), (SELECT COUNT(*) FROM Assignments WHERE studentID = @sID)";
+
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@sID", Session["ID"]);
+
+                        SqlDataReader rd = cmd.ExecuteReader();
+
+                        while (rd.Read())
+                        {
+                            ViewBag.Total = rd.GetInt32(0);
+                            ViewBag.Done = rd.GetInt32(1);
+                        }
+
+                        rd.Close();
+                    }
+
+                    string sql2 = "Select marks from Assignments WHERE studentID = @sID AND marks != 'NaN'";
+
+                    double tResult = 0;
+                    double gResult = 0;
+
+                    using(SqlCommand cmd = new SqlCommand(sql2, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@sID", Session["ID"]);
+                        SqlDataReader rd = cmd.ExecuteReader();
+
+                        while (rd.Read())
+                        {
+                            string r = rd.GetString(0);
+                            gResult += Convert.ToDouble(r.Split('/')[0].Trim());
+                            tResult += Convert.ToDouble(r.Split('/')[1].Trim());
+                        }
+
+                        rd.Close();
+                    }
+
+                    double result = (gResult / tResult) * 100;
+                    result = Math.Round(result, 2);
+                    ViewBag.Result = result;
+
+
+                }
+
                 ViewData["assignmentStatus"] = TempData["aStatus"];
                 return View();
             }
@@ -69,6 +125,11 @@ namespace LMS.Controllers
                         cmd.Parameters.AddWithValue("@uname", log.uname);
                         cmd.Parameters.AddWithValue("@password", log.password);
                         SqlDataReader rd = cmd.ExecuteReader();
+
+                        String st = cmd.CommandText;
+
+                        TempData["234"] = st;
+
                         while (rd.Read())
                         {
                             if (rd.GetString(2) == log.uname && rd.GetString(4) == log.password)
@@ -319,5 +380,4 @@ namespace LMS.Controllers
             return RedirectToAction("Index");
         }
     }
-
 }

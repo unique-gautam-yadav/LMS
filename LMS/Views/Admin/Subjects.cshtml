@@ -21,8 +21,8 @@
 }
 
 <style>
-    .a-btn{
-        padding-top : 10px;
+    .a-btn {
+        padding-top: 10px;
     }
 </style>
 
@@ -52,6 +52,9 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="syllabus_@i@t-tab" data-toggle="tab" href="#syllabus_@i@t" role="tab" aria-controls="syllabus_@i@t" aria-selected="false">Syllabus</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="plan_@i@t-tab" data-toggle="tab" href="#plan_@i@t" role="tab" aria-controls="plan_@i@t" aria-selected="false">Plan</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content mt-3" id="myTabContent">
@@ -91,6 +94,11 @@
                                             </a>
                                         </div>
                                     </div>
+                                    <div class="tab-pane fade" id="plan_@i@t" role="tabpanel" aria-labelledby="notes_@i@t-tab">
+                                        @{
+                                            Html.RenderAction("Plan", "Admin");
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -126,10 +134,12 @@
 
     @section Scripts{
 
-
-        <script>
-            $("#modal-xl2").modal()
-        </script>
+        @if (hasUpload == true)
+        {
+            <script>
+                $("#modal-xl2").modal()
+            </script>
+        }
 
 
     }}

@@ -8,6 +8,7 @@ using System.IO;
 using System.Globalization;
 using System.Collections.Generic;
 using Antlr.Runtime.Tree;
+using Microsoft.Ajax.Utilities;
 
 namespace LMS.Controllers
 {
@@ -694,6 +695,16 @@ namespace LMS.Controllers
                 ViewBag.UploadSatatus = "nofile";
             }
             return RedirectToAction("Subjects");
+        }
+
+        public ActionResult Plan(int subId = 0)
+        {
+            //
+            return View();
+        }
+        public ActionResult createPlan(int subId)
+        {
+            return View();
         }
     }
 }
